@@ -52,7 +52,3 @@
 
 /.idea
 .DS_Store
-/vendor/gems/*
-!/vendor/gems/.keep
-
-/public/vite*
