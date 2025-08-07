@@ -5,11 +5,6 @@ module MainConcerns
     helper_method :settings
   end
 
-  def redirect_to_telegram
-    # redirect_to "https://t.me/#{settings[:tg_main_bot]}", allow_other_host: true
-    redirect_to root_path
-  end
-
   private
 
   def error_notice(msg, status = :unprocessable_entity)
@@ -21,7 +16,7 @@ module MainConcerns
   end
 
   def send_notice(msg, key)
-    turbo_stream.append(:notices, partial: '/notices/notice', locals: { notices: msg, key: })
+    turbo_stream.append(:notices, partial: '/layouts/partials/notices/notice', locals: { notices: msg, key: })
   end
 
   # rubocop:disable Naming/MemoizedInstanceVariableName

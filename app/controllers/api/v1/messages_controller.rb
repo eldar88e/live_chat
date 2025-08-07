@@ -1,18 +1,20 @@
-class Api::MessagesController < ApplicationController
-  skip_before_action :verify_authenticity_token
+module Api
+  module V1
+    class MessagesController < BaseController
+      def index
+        chat = Chat.find(params[:chat_id])
+        pagy, messages = pagy(chat.messages.order(:created_at).select(:content, :role, :created_at))
 
-  def index
-    chat = Chat.find(params[:chat_id])
-    render json: chat.messages.order(:created_at)
-  end
+        render json: { messages: messages, meta: { total_pages: pagy.pages } }
+      end
 
-  def create
-    chat = Chat.find(params[:chat_id])
-    message = chat.messages.create!(role: 'user', content: params[:content])
+      def create
+        chat = Chat.find(params[:chat_id])
+        message = chat.messages.build(role: :client, content: params[:content])
+        return if message.save
 
-    reply_content = BotResponder.reply(message.content)
-    chat.messages.create!(role: 'bot', content: reply_content)
-
-    render json: chat.messages.order(:created_at)
+        render json: { errors: message.errors.full_messages }, status: :unprocessable_entity
+      end
+    end
   end
 end

@@ -1,6 +1,7 @@
 import "@hotwired/turbo-rails"
 import "../javascript/controllers/admin"
 import "../javascript/admin"
+import "../javascript/channels"
 
 import "trix"
 import "@rails/actiontext"

@@ -1,5 +1,3 @@
-<%= render '/layouts/partials/notices' %>
-
 <nav class="nav-bar bg-white border-gray-200 dark:bg-gray-800 dark:border-gray-700">
   <div class="nav-wrapper">
     <div class="flex justify-between items-center">
@@ -13,7 +11,7 @@
           </svg>
         </button>
         <%= link_to '/admin' do %>
-          <%= image_tag vite_asset_path('images/admin/logo.svg'), class: 'w-8 h-8 rounded-full' %>
+          <span>Admin</span>
         <% end %>
         <div style="height: 46px;"></div>
       </div>
@@ -25,14 +23,13 @@
 
         <div data-controller="dropdown" class="relative">
           <button data-action="click->dropdown#toggle" class="h-8 w-8 flex bg-red-200 dark:bg-red-500 text-gray-900 dark:text-white px-3 py-3 items-center justify-center ml-3 text-sm rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
-            <div class="uppercase"><%= current_user.first_name&.at(0) || current_user.email&.at(0) %></div>
+            <div class="uppercase"><%= current_user.email&.at(0) %></div>
           </button>
 
           <!-- Dropdown menu -->
           <div data-dropdown-target="menu" class="absolute overflow-hidden right-0 top-10 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
             <div class="text-sm text-gray-900 dark:text-white">
               <%= link_to admin_user_path(current_user), class: 'block px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white' do %>
-                <div><%= "#{current_user.middle_name.to_s} #{current_user.first_name.to_s}".strip %></div>
                 <div class="font-medium truncate"><%= current_user.email %></div>
                 <div><%= t("roles.#{current_user.role}") %></div>
               <% end %>

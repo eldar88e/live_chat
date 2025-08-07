@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
-<html data-controller="dark">
+<html>
   <head>
     <title><%= "#{content_for(:title).present? ? "#{content_for(:title)} | " : ''}#{settings[:app_name]&.capitalize} – Admin panel" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -15,6 +15,7 @@
 
   <body class="bg-white dark:bg-gray-900 antialiased" data-controller="menu-btn">
     <header id="header">
+      <%= render '/layouts/partials/notices/notices' %>
       <%= render partial: '/layouts/partials/admin/header' %>
     </header>
 

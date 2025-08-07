@@ -1,5 +1,6 @@
 module Admin
-  class ApplicationController < ActionController::Base
+  class BaseController < ActionController::Base
+    include Pundit::Authorization
     include MainConcerns
     include Pagy::Backend
 

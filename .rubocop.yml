@@ -1,0 +1,23 @@
+plugins:
+  - rubocop-performance
+  - rubocop-rails
+
+AllCops:
+  SuggestExtensions: false
+  NewCops: enable
+  Exclude:
+    - 'db/**/*'
+    - 'spec/**/*'
+    - 'bin/*'
+    - 'vendor/**/*'
+
+Style/Documentation:
+  Enabled: false
+
+# Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
+Layout/SpaceInsideArrayLiteralBrackets:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+

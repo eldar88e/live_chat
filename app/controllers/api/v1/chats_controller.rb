@@ -1,13 +1,22 @@
-class Api::ChatsController < ApplicationController
-  skip_before_action :verify_authenticity_token
+module Api
+  module V1
+    class ChatsController < BaseController
+      def create
+        chat = Chat.find_by(external_id: params[:external_id])
 
-  def create
-    chat = Chat.find_or_create_by(external_id: params[:external_id])
-    render json: { chat_id: chat.id }
-  end
+        if chat.blank?
+          chat = Chat.create!(external_id: params[:external_id])
+          reply_content = BotResponder.first_reply
+          chat.messages.create!(role: :bot, content: reply_content)
+        end
 
-  def show
-    chat = Chat.find(params[:id])
-    render json: chat.messages.order(:created_at)
+        render json: { chat_id: chat.id }
+      end
+
+      def show
+        chat = Chat.find(params[:id])
+        render json: chat.messages.order(:created_at)
+      end
+    end
   end
 end

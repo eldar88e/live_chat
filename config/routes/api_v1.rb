@@ -1,6 +1,7 @@
 namespace :api do
   namespace :v1 do
-    resources :products, only: [:index]
-    resources :orders, only: [:index]
+    resources :chats, only: [:create, :show] do
+      resources :messages, only: [:index, :create]
+    end
   end
 end

@@ -1,5 +1,5 @@
 module Admin
-  class SettingsController < Admin::ApplicationController
+  class SettingsController < BaseController
     before_action :set_setting, only: %i[edit update destroy]
 
     def index

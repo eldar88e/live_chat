@@ -1,5 +1,5 @@
 module Admin
-  class UsersController < Admin::ApplicationController
+  class UsersController < BaseController
     before_action :set_user, only: %i[show edit update destroy]
 
     def index
@@ -10,7 +10,6 @@ module Admin
     def show
       @q_orders      = @user.orders.order(created_at: :desc).ransack(params[:q])
       @pagy, @orders = pagy(@q_orders.result)
-      # TODO: Добавить отзывы
     end
 
     def edit

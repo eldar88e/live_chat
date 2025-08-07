@@ -1,5 +1,5 @@
 module Admin
-  class ErrorsController < ApplicationController
+  class ErrorsController < BaseController
     before_action :set_service, :set_items
 
     def index; end
