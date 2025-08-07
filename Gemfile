@@ -7,7 +7,7 @@ gem "puma", ">= 6.0"
 gem "turbo-rails"
 gem "stimulus-rails"
 gem "jbuilder"
-gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem "tzinfo-data", platforms: %i[windows jruby]
 
 gem "devise"
 gem "pg", "~> 1.6"

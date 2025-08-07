@@ -1,6 +1,11 @@
 module Api
   module V1
     class ChatsController < BaseController
+      def show
+        chat = Chat.find(params[:id])
+        render json: chat.messages.order(:created_at)
+      end
+
       def create
         chat = Chat.find_by(external_id: params[:external_id])
 
@@ -11,11 +16,6 @@ module Api
         end
 
         render json: { chat_id: chat.id }
-      end
-
-      def show
-        chat = Chat.find(params[:id])
-        render json: chat.messages.order(:created_at)
       end
     end
   end

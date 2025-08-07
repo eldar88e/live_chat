@@ -52,7 +52,7 @@ module Admin
     end
 
     def setting_params
-      params.require(:setting).permit(:variable, :value, :description)
+      params.expect(setting: %i[variable value description])
     end
   end
 end

@@ -10,6 +10,17 @@ AllCops:
     - 'spec/**/*'
     - 'bin/*'
     - 'vendor/**/*'
+    - 'config/*.rb'
+    - 'config/initializers/filter_parameter_logging.rb'
+    - 'config/initializers/content_security_policy.rb'
+    - 'config/environments/production.rb'
+    - 'config.ru'
+    - 'Rakefile'
+    - 'Gemfile'
+
+Style/StringLiterals:
+  Exclude:
+    - 'config/environments/*.rb'
 
 Style/Documentation:
   Enabled: false
