@@ -11,10 +11,12 @@ services:
     volumes:
       - gems:/usr/local/bundle
       - .:/app
-    ports:
-      - "3000:3000"
+    # ports:
+      # - "3000:3000"
     networks:
-      - net
+      net:
+      proxy-net:
+        ipv4_address: 172.29.0.2
     restart: always
 
   pg:
@@ -39,3 +41,5 @@ volumes:
 
 networks:
   net:
+  proxy-net:
+    external: true
