@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
-  root 'admin/messages#index'
+  root 'pages#home'
 
   devise_for :users
   get 'up' => 'rails/health#show', as: :rails_health_check
 
-  mount SolidQueueDashboard::Engine, at: "/solid-queue"
+  authenticate :user, ->(user) { user.admin? } do
+    mount SolidQueueDashboard::Engine, at: "/admin/solid-queue"
+    # mount PgHero::Engine, at: '/admin/pghero'
+  end
 
   draw :api_v1
   draw :admin

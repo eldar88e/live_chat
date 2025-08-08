@@ -27,5 +27,6 @@ class Message < ApplicationRecord
       "chat_#{chat_id}",
       { content: content, role: role, created_at: created_at.strftime('%H:%M') }
     )
+    TelegramSenderJob.perform_later(content) if role == 'client'
   end
 end

@@ -25,6 +25,7 @@ gem 'vite_rails'
 gem 'dotenv'
 gem 'i18n'
 gem 'rack-cors'
+gem 'telegram-bot-ruby', require: false
 
 gem 'solid_queue'
 gem "solid_queue_dashboard"
