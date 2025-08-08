@@ -25,6 +25,10 @@ gem 'dotenv'
 gem 'i18n'
 gem 'rack-cors'
 
+gem 'solid_queue'
+gem 'solid_cache'
+gem 'solid_cable'
+
 group :development, :test do
   gem "pry"
   gem "brakeman", require: false

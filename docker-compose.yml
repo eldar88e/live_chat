@@ -1,0 +1,41 @@
+services:
+  app:
+    image: live_chat
+    build: .
+    env_file: ./.env
+    container_name: live_chat
+    hostname: live_chat
+    depends_on:
+      - pg
+    command: ['bundle', 'exec', 'rails', 's', '-p', '3000', '-b', '0.0.0.0']
+    volumes:
+      - gems:/usr/local/bundle
+      - .:/app
+    ports:
+      - "3000:3000"
+    networks:
+      - net
+    restart: always
+
+  pg:
+    image: postgres:16.1-alpine3.19
+    container_name: live_chat_pg
+    hostname: live_chat_pg
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      TZ: Europe/Moscow
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      # - ./postgresql.conf:/var/lib/postgresql/data/postgresql.conf
+    networks:
+      - net
+    restart: unless-stopped
+
+volumes:
+  db_data:
+  gems:
+
+networks:
+  net:
