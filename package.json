@@ -1,11 +1,17 @@
 {
   "name": "live_chat",
+  "version": "1.0.0",
   "private": true,
+  "license": "MIT",
+  "browserslist": [
+    "cover 99.5%"
+  ],
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build"
+  },
   "devDependencies": {
     "vite": "^6.3.5"
-  },
-  "scripts": {
-    "dev": "vite dev"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",

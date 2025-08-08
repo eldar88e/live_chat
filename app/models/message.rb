@@ -19,16 +19,13 @@ class Message < ApplicationRecord
   private
 
   def broadcast_message
-    broadcast_append_to "chat_#{chat_id}", partial: '/admin/messages/msg', locals: { message: self }, target: 'messages'
-    # TODO: переделать на broadcast_append_later_to
+    broadcast_append_later_to(
+      "chat_#{chat_id}", partial: '/admin/messages/msg', locals: { message: self }, target: 'messages'
+    )
 
-    ActionCable.server.broadcast(
+    CableBroadcastJob.perform_later(
       "chat_#{chat_id}",
-      {
-        content: content,
-        role: role,
-        created_at: created_at.strftime('%H:%M')
-      }
+      { content: content, role: role, created_at: created_at.strftime('%H:%M') }
     )
   end
 end

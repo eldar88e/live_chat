@@ -6,6 +6,7 @@ gem "bootsnap", require: false
 gem "puma", ">= 6.0"
 gem "turbo-rails"
 gem "stimulus-rails"
+gem 'sprockets-rails'
 gem "jbuilder"
 gem "tzinfo-data", platforms: %i[windows jruby]
 
@@ -26,6 +27,7 @@ gem 'i18n'
 gem 'rack-cors'
 
 gem 'solid_queue'
+gem "solid_queue_dashboard"
 gem 'solid_cache'
 gem 'solid_cable'
 
