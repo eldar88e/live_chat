@@ -3,9 +3,9 @@ module Api
     class MessagesController < BaseController
       def index
         chat = Chat.find(params[:chat_id])
-        pagy, messages = pagy(chat.messages.order(:created_at).select(:content, :role, :created_at))
+        pagy, messages = pagy(chat.messages.order(created_at: :desc).select(:content, :role, :created_at), limit: 50)
 
-        render json: { messages: messages, meta: { total_pages: pagy.pages } }
+        render json: { messages: messages.reverse, meta: { total_pages: pagy.pages } }
       end
 
       def create

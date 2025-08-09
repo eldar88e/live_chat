@@ -29,6 +29,7 @@
         = turbo_stream_from "chat_#{@current_chat&.id}"
         .overflow-y-auto.p-4.bg-white class="max-h-[400px]" id='messages' data-clear-input-target="messages"
           - if @messages.present?
+            = render partial: '/layouts/partials/admin/pagy'
             - @messages.each do |message|
               = render partial: '/admin/messages/msg', locals: { message: message }
           - else

@@ -1,2 +1,10 @@
 .m-20
-  h1 Добро пожаловать на главную страницу приложения Live Chat!
+  .text-center
+    h1 Добро пожаловать на главную страницу приложения Live Chat!
+    - if user_signed_in?
+      p.mb-5 Вы вошли в систему как #{current_user.email}
+      - if current_user.admin?
+        a href="/admin" Админка
+    - else
+      p.mb-5 Вы не вошли в систему
+      = link_to 'Войти', new_user_session_path
