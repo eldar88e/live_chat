@@ -5,16 +5,16 @@
 /     time data-controller="timeago" data-timeago-locale-value="ru" title="#{format_date message.created_at}" datetime="#{message.created_at.iso8601}"
 /       = format_date message.created_at
 
-- incoming = %w[bot manager].include?(message.role)
-- align_cls   = incoming ? "justify-start" : "justify-end"
-- bubble_cls  = incoming ? "bg-slate-700 text-slate-100 rounded-r-2xl rounded-tl-2xl" : "bg-sky-600 text-white rounded-l-2xl rounded-tr-2xl"
-- time_align  = incoming ? "text-left" : "text-right"
-- initials    = (message.try(:sender)&.try(:initials) || message.role.first).to_s.upcase
+- incoming   = %w[bot manager].include?(message.role)
+- align_cls  = incoming ? "justify-start" : "justify-end"
+- bubble_cls = incoming ? "rounded-r-xl rounded-bl-xl" : "rounded-l-xl rounded-br-xl"
+- time_align = incoming ? "text-left" : "text-right"
+- initials   = message.role.first.upcase
 
 .mb-6.flex.gap-3 class=align_cls data-role=message.role
   - if incoming
     .shrink-0
-      .h-8.w-8.rounded-full.bg-slate-600.flex.items-center.justify-center.text-xs.font-medium.text-white= initials
+      .h-8.w-8.rounded-full.bg-slate-600.flex.items-center.justify-center.text-xs.font-medium.text-white = initials
 
   .flex.flex-col class="max-w-[75%]"
     .text-xs.text-slate-400.my-1.flex.gap-1
@@ -23,9 +23,9 @@
         time data-controller="timeago" data-timeago-locale-value="ru" title="#{format_date message.created_at}" datetime="#{message.created_at.iso8601}"
           = format_date message.created_at
 
-    .px-4.py-2.shadow-sm class=bubble_cls
+    .px-4.py-2.shadow-sm.bg-gray-100.text-gray-900.dark:text-white.dark:bg-gray-700 class=bubble_cls
       = simple_format(message.content, {}, wrapper_tag: "span")
 
   - unless incoming
     .shrink-0
-      .h-8.w-8.rounded-full.bg-sky-700.flex.items-center.justify-center.text-xs.font-medium.text-white= initials
+      .h-8.w-8.rounded-full.bg-sky-700.flex.items-center.justify-center.text-xs.font-medium.text-white = initials
