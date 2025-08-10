@@ -1,4 +1,9 @@
 class User < ApplicationRecord
+  has_many :owned_chat_widgets, class_name: 'ChatWidget', foreign_key: 'owner_id',
+                                inverse_of: :owner, dependent: :destroy
+  has_many :memberships, dependent: :destroy
+  has_many :chat_widgets, through: :memberships
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

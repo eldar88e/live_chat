@@ -10,14 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_07_210831) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_09_124104) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "chat_widgets", force: :cascade do |t|
+    t.bigint "owner_id", null: false
+    t.string "name", null: false
+    t.string "domain", null: false
+    t.string "token_digest", null: false
+    t.jsonb "settings", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["domain"], name: "index_chat_widgets_on_domain", unique: true
+    t.index ["owner_id"], name: "index_chat_widgets_on_owner_id"
+  end
 
   create_table "chats", force: :cascade do |t|
     t.string "external_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "chat_widget_id", null: false
+    t.index ["chat_widget_id"], name: "index_chats_on_chat_widget_id"
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.bigint "chat_widget_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "role", default: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_widget_id"], name: "index_memberships_on_chat_widget_id"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -51,5 +75,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_07_210831) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "chat_widgets", "users", column: "owner_id"
+  add_foreign_key "chats", "chat_widgets"
+  add_foreign_key "memberships", "chat_widgets"
+  add_foreign_key "memberships", "users"
   add_foreign_key "messages", "chats"
 end

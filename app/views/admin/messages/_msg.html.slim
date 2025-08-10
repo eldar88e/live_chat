@@ -1,10 +1,3 @@
-/ .mb-4.flex.flex-col
-/   .text-sm.text-gray-500 = message.role
-/   .px-4.py-2.bg-blue-100.rounded-lg.shadow.text-gray-900.mt-1 = message.content
-/   .time.text-xs.text-gray-400
-/     time data-controller="timeago" data-timeago-locale-value="ru" title="#{format_date message.created_at}" datetime="#{message.created_at.iso8601}"
-/       = format_date message.created_at
-
 - incoming   = %w[bot manager].include?(message.role)
 - align_cls  = incoming ? "justify-start" : "justify-end"
 - bubble_cls = incoming ? "rounded-r-xl rounded-bl-xl" : "rounded-l-xl rounded-br-xl"
@@ -19,7 +12,7 @@
   .flex.flex-col class="max-w-[75%]"
     .text-xs.text-slate-400.my-1.flex.gap-1
       = message.role.capitalize
-      div class=time_align
+      div class="#{time_align}"
         time data-controller="timeago" data-timeago-locale-value="ru" title="#{format_date message.created_at}" datetime="#{message.created_at.iso8601}"
           = format_date message.created_at
 

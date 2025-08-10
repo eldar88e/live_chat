@@ -1,0 +1,14 @@
+= form_with model: @chat_widget, url: (method == :patch ? admin_chat_widget_path(@chat_widget) : admin_chat_widgets_path), class: 'admin-form' do |form|
+  .mb-5
+    = form.label :name
+    = form.text_field :name
+  .mb-5
+    = form.label :domain
+    = form.text_field :domain
+  .mb-5
+    = form.label :settings
+    = form.text_field :settings
+  = form.submit "Сохранить"
+
+- if method == :patch
+  = button_to 'Сгенерировать токен', admin_chat_widget_path(@chat_widget, token: true), method: :patch, class: 'btn'

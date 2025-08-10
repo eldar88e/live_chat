@@ -5,4 +5,5 @@ namespace :admin do
   resources :settings
   resources :users
   resources :errors
+  resources :chat_widgets
 end

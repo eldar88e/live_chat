@@ -164,9 +164,9 @@ GEM
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
-    jbuilder (2.13.0)
-      actionview (>= 5.0.0)
-      activesupport (>= 5.0.0)
+    jbuilder (2.14.0)
+      actionview (>= 7.0.0)
+      activesupport (>= 7.0.0)
     json (2.13.2)
     language_server-protocol (3.17.0.5)
     launchy (3.1.1)
@@ -206,12 +206,6 @@ GEM
     nio4r (2.7.4)
     nokogiri (1.18.9-aarch64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.18.9-aarch64-linux-musl)
-      racc (~> 1.4)
-    nokogiri (1.18.9-arm-linux-gnu)
-      racc (~> 1.4)
-    nokogiri (1.18.9-arm-linux-musl)
-      racc (~> 1.4)
     nokogiri (1.18.9-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.18.9-x86_64-linux-gnu)
@@ -226,7 +220,6 @@ GEM
       racc
     pg (1.6.1)
     pg (1.6.1-aarch64-linux)
-    pg (1.6.1-aarch64-linux-musl)
     pg (1.6.1-arm64-darwin)
     pg (1.6.1-x86_64-linux)
     pg (1.6.1-x86_64-linux-musl)
@@ -422,6 +415,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_link_to
+  bcrypt
   better_errors
   binding_of_caller
   bootsnap

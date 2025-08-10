@@ -15,6 +15,7 @@ gem "pg", "~> 1.6"
 # gem 'redis', '~> 5.4'
 
 gem 'active_link_to'
+gem "bcrypt"
 gem 'faraday'
 gem 'slim-rails'
 gem 'view_component'

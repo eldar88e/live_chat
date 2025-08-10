@@ -1,0 +1,22 @@
+tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" id="#{dom_id chat_widget}"
+  td.w-4.p-4
+    .flex.items-center
+      input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+      label for="checkbox-table-search-1" class="sr-only" checkbox
+
+  td.px-6.py-4 = chat_widget.id
+  th scope="row" class="px-6 py-4" = chat_widget.name
+  td.px-6.py-4 = chat_widget.domain
+  td.px-6.py-4 = chat_widget.users.pluck(:email).join(', ')
+  td.px-6.py-4
+    - if chat_widget.settings.present?
+      = chat_widget.settings
+  td.px-6.py-4 = chat_widget.created_at
+    time data-controller="timeago" data-timeago-locale-value="ru" title="#{format_date chat_widget.created_at}" datetime="#{chat_widget.created_at.iso8601}"
+      = format_date chat_widget.created_at
+
+  td class="flex items-center px-6 py-4"
+    = link_to edit_admin_chat_widget_path(chat_widget), data: { controller: 'modal-btn', action: 'click->modal-btn#open', turbo_prefetch: false }, class: 'btn me-2' do
+      = render Admin::IconComponent.new name: :edit
+    = button_to admin_chat_widget_path(chat_widget), method: :delete, data: { confirm: 'Вы уверены, что хотите удалить данный виджет?', controller: 'confirm', action: 'click->confirm#call' }, class: 'btn btn-danger' do
+      = render Admin::IconComponent.new name: :trash
