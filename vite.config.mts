@@ -34,11 +34,6 @@ export default defineConfig({
     build: {
         chunkSizeWarningLimit: 800,
         sourcemap: false,
-        rollupOptions: {
-            output: {
-                manualChunks: () => 'live-chat.js',
-            },
-        },
     },
     server: {
         host: 'localhost',

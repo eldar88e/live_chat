@@ -51,3 +51,4 @@ node_modules
 !/vendor/gems/.keep
 
 /public/vite*
+/public/widget
