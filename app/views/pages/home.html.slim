@@ -4,7 +4,7 @@
     - if user_signed_in?
       p.mb-5 Вы вошли в систему как #{current_user.email}
       - if current_user.admin?
-        a href="/admin" Админка
+        = link_to 'Админка', admin_root_path, data: { turbo: false }
     - else
       p.mb-5 Вы не вошли в систему
-      = link_to 'Войти', new_user_session_path, data: { turbo: false }
+      = link_to 'Войти', new_user_session_path
