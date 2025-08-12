@@ -10,6 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const domain = container.getAttribute('data-domain');
         const cableUrl = container.getAttribute('data-cable-url');
         const root = createRoot(container);
-        root.render(<LiveChat apiUrl={apiUrl} token={token} domain={domain} />);
+        root.render(<LiveChat apiUrl={apiUrl} token={token} domain={domain} cableUrl={cableUrl} />);
     }
 });

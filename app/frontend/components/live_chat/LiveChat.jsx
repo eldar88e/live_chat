@@ -3,7 +3,6 @@ import { createConsumer } from "@rails/actioncable";
 import { Smile, Send } from "lucide-react";
 
 export default function LiveChat({apiUrl: apiUrl, token: token, domain: domain, cableUrl: cableUrl}) {
-    console.log(cableUrl);
     const [isOpen, setIsOpen] = useState(false);
     const [chatId, setChatId] = useState(null);
     const [messages, setMessages] = useState([]);
