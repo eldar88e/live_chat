@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { createConsumer } from "@rails/actioncable";
 import { Smile, Send } from "lucide-react";
 
-export default function LiveChat({apiUrl: apiUrl, token: token, domain: domain}) {
+export default function LiveChat({apiUrl: apiUrl, token: token, domain: domain, cableUrl: cableUrl}) {
     const [isOpen, setIsOpen] = useState(false);
     const [chatId, setChatId] = useState(null);
     const [messages, setMessages] = useState([]);
@@ -49,7 +49,7 @@ export default function LiveChat({apiUrl: apiUrl, token: token, domain: domain})
         await loadMessages(data.chat_id);
 
         // Connect to ActionCable
-        cableRef.current = createConsumer("ws://localhost:3000/cable");
+        cableRef.current = createConsumer(cableUrl);
         subscriptionRef.current = cableRef.current.subscriptions.create(
             { channel: "ChatChannel", chat_id: data.chat_id },
             {

@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const apiUrl = container.getAttribute('data-api-url');
         const token = container.getAttribute('data-token');
         const domain = container.getAttribute('data-domain');
+        const cableUrl = container.getAttribute('data-cable-url');
         const root = createRoot(container);
         root.render(<LiveChat apiUrl={apiUrl} token={token} domain={domain} />);
     }
