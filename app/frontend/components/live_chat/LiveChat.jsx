@@ -110,9 +110,6 @@ export default function LiveChat({apiUrl: apiUrl, token: token, domain: domain, 
                     outline: "none",
                     border: "none",
                     boxShadow: "none",
-                    position: "fixed",
-                    right: "10px",
-                    bottom: "10px",
                     cursor: "pointer"
                 }}
                 title="Открыть чат"
