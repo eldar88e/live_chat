@@ -39,7 +39,7 @@
          data-token="<%= settings[:self_chat_token] %>"
          data-domain="<%= ENV.fetch('HOST', 'localhost:3000') %>"
          data-cable-url="<%= Rails.env.production? ? "wss://#{ENV.fetch('HOST', nil)}/cable" : 'ws://localhost:3000/cable' %>"
-         style="position:fixed;z-index: 10000;right:0;bottom:0;"
+         style="position:fixed;z-index: 10000;right:20px;bottom:20px;"
     ></div>
   </body>
 </html>
