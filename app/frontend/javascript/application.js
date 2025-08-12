@@ -41,16 +41,6 @@ window.clearModal = function() {
     document.getElementById('modal').textContent = '';
 };
 
-window.leftModal = function() {
-    document.getElementById('modal').classList.add('left');
-    document.getElementById('modal').classList.remove('right');
-};
-
-window.rightModal = function() {
-    document.getElementById('modal').classList.add('right');
-    document.getElementById('modal').classList.remove('left');
-}
-
 window.closeMiniApp = function() {
     Telegram.WebApp.close();
 };
