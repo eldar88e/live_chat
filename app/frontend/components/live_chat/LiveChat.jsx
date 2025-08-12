@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { createConsumer } from "@rails/actioncable";
 import { Smile, Send } from "lucide-react";
 
+const MAX_TEXTAREA_HEIGHT = 120;
+
 export default function LiveChat({apiUrl: apiUrl, token: token, domain: domain, cableUrl: cableUrl}) {
     const [isOpen, setIsOpen] = useState(false);
     const [chatId, setChatId] = useState(null);
@@ -10,10 +12,24 @@ export default function LiveChat({apiUrl: apiUrl, token: token, domain: domain, 
     const cableRef = useRef(null);
     const subscriptionRef = useRef(null);
     const [message, setMessage] = useState("");
+    const textareaRef = useRef(null);
     const AUTH_HEADERS = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
         "X-Widget-Domain": domain
+    };
+
+    const handleInput = (e) => {
+        const el = textareaRef.current;
+        if (el) {
+            el.style.height = "auto";
+            if (el.scrollHeight < MAX_TEXTAREA_HEIGHT) {
+                el.style.height = el.scrollHeight + "px";
+            } else {
+                el.style.height = `${MAX_TEXTAREA_HEIGHT}px`;
+            }
+        }
+        setMessage(e.target.value);
     };
 
     useEffect(() => {
@@ -176,27 +192,22 @@ export default function LiveChat({apiUrl: apiUrl, token: token, domain: domain, 
             </div>
 
             {/* Messages */}
-            <div
-                style={{ flex: 1, overflowY: "auto", padding: "8px" }}
-            >
+            <div style={{ flex: 1, overflowY: "auto", padding: "8px" }}>
                 {messages.map((m, i) => (
                     <div
                         key={i}
-                        style={{
-                            margin: "4px 0",
-                            textAlign: ["bot", "manager"].includes(m.role) ? "left" : "right"
-                        }}
+                        style={{margin: "4px 0", textAlign: ["bot", "manager"].includes(m.role) ? "left" : "right"}}
                     >
-            <span
-                style={{
-                    background: m.role === "bot" ? "#eee" : "#d6f5d6",
-                    padding: "5px 8px",
-                    borderRadius: "8px",
-                    display: "inline-block"
-                }}
-            >
-              {m.content}
-            </span>
+                        <span
+                            style={{
+                                background: m.role === "bot" ? "#eee" : "#d6f5d6",
+                                padding: "5px 8px",
+                                borderRadius: "8px",
+                                display: "inline-block"
+                            }}
+                        >
+                          {m.content}
+                        </span>
                     </div>
                 ))}
                 <div ref={messagesEndRef}></div>
@@ -210,10 +221,12 @@ export default function LiveChat({apiUrl: apiUrl, token: token, domain: domain, 
                         className="flex w-full"
                     >
                     <textarea
-                        className="flex-1 bg-transparent outline-none resize-none h-[24px] max-h-[120px] overflow-y-auto"
+                        ref={textareaRef}
+                        style={{ maxHeight: `${MAX_TEXTAREA_HEIGHT}px` }}
+                        className="flex-1 bg-transparent outline-none resize-none h-[24px] overflow-y-auto"
                         placeholder="Написать сообщение..."
                         value={message}
-                        onChange={(e) => setMessage(e.target.value)}
+                        onChange={handleInput}
                         onKeyDown={handleKeyDown}
                     />
                     <button
