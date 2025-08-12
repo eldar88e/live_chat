@@ -15,7 +15,6 @@ module Api
       def authenticate_chat_widget!
         token  = request.authorization&.sub(/^Bearer\s+/, '')
         domain = params[:domain] || request.headers['X-Widget-Domain']
-
         return head :unauthorized if token.blank? || domain.blank?
 
         @current_chat_widget = ChatWidget.find_by(domain: normalize_domain(domain))

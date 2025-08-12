@@ -7,7 +7,7 @@ module Api
       end
 
       def create
-        chat = Chat.find_by(external_id: params[:external_id])
+        chat = current_chat_widget.chats.find_by(external_id: params[:external_id])
 
         if chat.blank?
           chat = current_chat_widget.chats.create!(external_id: params[:external_id])

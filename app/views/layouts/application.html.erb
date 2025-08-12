@@ -16,6 +16,7 @@
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%= vite_client_tag %>
+    <%= vite_react_refresh_tag %>
     <%= vite_stylesheet_tag 'application' %>
     <%= vite_javascript_tag 'application' %>
   </head>
@@ -31,5 +32,13 @@
         <%= yield %>
       </div>
     </main>
+    <%= vite_javascript_tag 'live-chat', defer: true %>
+    <%= vite_stylesheet_tag 'live-chat' %>
+    <div id="live-chat-container"
+         data-api-url="<%= Rails.env.production? ? "https://#{ENV.fetch('HOST', nil)}" : 'http://localhost:3000' %>"
+         data-token="<%= settings[:self_chat_token] %>"
+         data-domain="<%= ENV.fetch('HOST', 'localhost:3000') %>"
+         style="position:fixed;z-index: 10000;right:0;bottom:0;"
+    ></div>
   </body>
 </html>

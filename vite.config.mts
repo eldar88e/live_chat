@@ -17,6 +17,10 @@ export default defineConfig({
         react(),
         tailwindcss(),
     ],
+    resolve: {
+        alias: { '@': '/app/frontend' },
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
+    },
     css: {
         preprocessorOptions: {
             scss: {
