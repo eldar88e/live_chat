@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_09_124104) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_13_223349) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -22,8 +22,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_09_124104) do
     t.jsonb "settings", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "token_hash"
     t.index ["domain"], name: "index_chat_widgets_on_domain", unique: true
     t.index ["owner_id"], name: "index_chat_widgets_on_owner_id"
+    t.index ["token_hash"], name: "index_chat_widgets_on_token_hash", unique: true
   end
 
   create_table "chats", force: :cascade do |t|

@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     # mount PgHero::Engine, at: '/admin/pghero'
   end
 
+  resource :widget, only: [:show]
+
   draw :api_v1
   draw :admin
 

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Live Chat Widget</title>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <%= vite_client_tag %>
+    <%= vite_react_refresh_tag %>
+    <%= vite_javascript_tag 'live-chat' %>
+    <%= vite_stylesheet_tag 'live-chat' %>
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="live-chat-container"
+         data-api-url="<%= Rails.env.production? ? "https://#{ENV.fetch('HOST', nil)}" : 'http://localhost:3000' %>"
+         data-token="<%= settings[:self_chat_token] %>"
+         data-domain="<%= ENV.fetch('HOST', 'localhost:3000') %>"
+         data-cable-url="<%= Rails.env.production? ? "wss://#{ENV.fetch('HOST', nil)}/cable" : 'ws://localhost:3000/cable' %>"
+         style="height: 100%;"
+    ></div>
+  </body>
+</html>
