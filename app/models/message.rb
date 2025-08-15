@@ -4,7 +4,10 @@ class Message < ApplicationRecord
   enum :role, { client: 0, bot: 1, manager: 2 }
 
   validates :content, presence: true, length: { maximum: 1000 },
-            format: { without: /\A\s*\z/, message: 'не может быть пустым или состоять только из пробелов' }
+                      format: {
+                        without: /\A\s*\z/,
+                        message: I18n.t('errors.messages.blank_or_spaces')
+                      }
 
   after_create_commit :broadcast_message
 

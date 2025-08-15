@@ -48,3 +48,6 @@ ru:
           attributes:
             email:
               taken: "уже используется"
+        messages:
+          attributes:
+            blank_or_spaces: "не может быть пустым или состоять только из пробелов"

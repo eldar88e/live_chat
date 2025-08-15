@@ -1,5 +1,5 @@
 module Api
-  class BaseController < ActionController::Base
+  class BaseController < ApplicationController
     include Pagy::Backend
 
     skip_before_action :verify_authenticity_token

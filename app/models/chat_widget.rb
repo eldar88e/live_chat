@@ -26,8 +26,8 @@ class ChatWidget < ApplicationRecord
     false
   end
 
-  def self.find_by_token(raw)
-    hash   = Digest::SHA256.hexdigest(raw)
+  def self.find_with_token(raw)
+    hash = Digest::SHA256.hexdigest(raw)
     find_by!(token_hash: hash)
   end
 

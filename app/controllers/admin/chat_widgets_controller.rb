@@ -29,7 +29,8 @@ module Admin
     def create
       @chat_widget = current_user.owned_chat_widgets.build(chat_widget_params)
 
-      if token = @chat_widget.rotate_token!
+      token = @chat_widget.rotate_token!
+      if token
         # redirect_to admin_chat_widgets_path, notice: t('.create')
         show_token(token)
       else

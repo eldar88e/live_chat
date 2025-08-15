@@ -1,7 +1,6 @@
 module Admin
-  class BaseController < ActionController::Base
+  class BaseController < ApplicationController
     include Pundit::Authorization
-    include MainConcerns
     include Pagy::Backend
 
     before_action :authenticate_user!, :authorize_admin_access!
