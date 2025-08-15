@@ -11,7 +11,7 @@
     "build": "yarn vite build && yarn vite build --config vite.widget.config.js"
   },
   "devDependencies": {
-    "vite": "^6.3.5"
+    "vite": "^7.1.2"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
