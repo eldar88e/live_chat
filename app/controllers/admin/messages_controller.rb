@@ -6,7 +6,7 @@ module Admin
       @chats = Chat.joins(:messages)
                    .select('chats.*, MAX(messages.created_at) AS last_message_at')
                    .group('chats.id')
-                   .order('last_message_at DESC')
+                   .order(last_message_at: :desc)
       @current_chat = Chat.find_by(id: params[:chat_id]) || @chats.first
       messages = @current_chat&.messages&.order(created_at: :desc) || Message.none
       @pagy, @messages = pagy(messages, limit: 50)
