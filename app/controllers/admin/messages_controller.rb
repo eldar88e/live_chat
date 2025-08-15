@@ -4,9 +4,10 @@ module Admin
 
     def index
       @chats = Chat.joins(:messages)
-                   .select('chats.*, MAX(messages.created_at) AS last_message_at')
+                   .select('chats.*, MAX(messages.created_at)')
                    .group('chats.id')
-                   .order(last_message_at: :desc)
+                   .order('MAX(messages.created_at) DESC')
+      @pages, @chats = pagy(@chats, limit: 10, page_param: :chats_page)
       @current_chat = Chat.find_by(id: params[:chat_id]) || @chats.first
       messages = @current_chat&.messages&.order(created_at: :desc) || Message.none
       @pagy, @messages = pagy(messages, limit: 50)

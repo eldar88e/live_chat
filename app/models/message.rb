@@ -9,7 +9,7 @@ class Message < ApplicationRecord
                         message: I18n.t('errors.messages.blank_or_spaces')
                       }
 
-  after_create_commit :broadcast_message
+  after_create_commit :broadcast_widget_chat, :broadcast_admin_chat, :notify_tg
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[created_at]
@@ -21,15 +21,18 @@ class Message < ApplicationRecord
 
   private
 
-  def broadcast_message
-    broadcast_append_later_to(
-      "chat_#{chat_id}", partial: '/admin/messages/msg', locals: { message: self }, target: 'messages'
-    )
+  def broadcast_widget_chat
+    payload = { content: content, role: role, created_at: created_at.strftime('%H:%M') }
+    CableBroadcastJob.perform_later("chat_#{chat_id}", payload)
+  end
 
-    CableBroadcastJob.perform_later(
-      "chat_#{chat_id}",
-      { content: content, role: role, created_at: created_at.strftime('%H:%M') }
+  def broadcast_admin_chat
+    broadcast_append_later_to(
+      "admin_chat_#{chat_id}", partial: '/admin/messages/msg', locals: { message: self }, target: 'messages'
     )
+  end
+
+  def notify_tg
     TelegramSenderJob.perform_later(content) if (role == 'client') && Rails.env.production?
   end
 end

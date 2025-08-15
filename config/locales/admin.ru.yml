@@ -8,6 +8,8 @@ ru:
       create: "Виджет был успешно создан."
       update: "Виджет был успешно обновлен."
       destroy: "Виджет был успешно удален."
+    chats:
+      destroy: "Чат был успешно удален."
   activerecord:
     models:
       setting: "Настройка"

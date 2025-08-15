@@ -1,13 +1,13 @@
-class ChatChannel < ApplicationCable::Channel
+class AdminChatChannel < ApplicationCable::Channel
   def subscribed
     @chat = Chat.find(params[:chat_id])
     return reject unless @chat
 
-    stream_from "chat_#{@chat.id}"
+    stream_from "admin_chat_#{@chat.id}"
     @chat.update!(online: true)
   end
 
   def unsubscribed
-    @chat&.update!(online: false)
+    # Any cleanup needed when channel is unsubscribed
   end
 end

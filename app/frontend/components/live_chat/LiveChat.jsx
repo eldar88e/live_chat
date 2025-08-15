@@ -19,6 +19,23 @@ export default function LiveChat({apiUrl: apiUrl, token: token, domain: domain, 
         "X-Widget-Domain": domain
     };
 
+    const initChat = async () => {
+        let externalId =
+            localStorage.getItem("rails_chat_ext_id") ||
+            Math.random().toString(36).substr(2, 10);
+        localStorage.setItem("rails_chat_ext_id", externalId);
+
+        const res = await fetch(`${apiUrl}/api/v1/widget/chats`, {
+            method: "POST",
+            headers: AUTH_HEADERS,
+            body: JSON.stringify({external_id: externalId})
+        });
+        const data = await res.json();
+        setChatId(data.chat_id);
+
+        await loadMessages(data.chat_id);
+    }
+
     const handleInput = (e) => {
         const el = textareaRef.current;
         if (el) {
@@ -36,7 +53,9 @@ export default function LiveChat({apiUrl: apiUrl, token: token, domain: domain, 
 
     useEffect(() => {
         if (messagesEndRef.current) {
-            messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+            setTimeout(() => {
+                messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+            }, 50);
         }
     }, [messages]);
 
@@ -50,38 +69,20 @@ export default function LiveChat({apiUrl: apiUrl, token: token, domain: domain, 
     };
 
     useEffect(() => {
-        const initChat = async () => {
-            let externalId =
-                localStorage.getItem("rails_chat_ext_id") ||
-                Math.random().toString(36).substr(2, 10);
-            localStorage.setItem("rails_chat_ext_id", externalId);
-
-            const res = await fetch(`${apiUrl}/api/v1/widget/chats`, {
-                method: "POST",
-                headers: AUTH_HEADERS,
-                body: JSON.stringify({external_id: externalId})
-            });
-            const data = await res.json();
-            setChatId(data.chat_id);
-
-            await loadMessages(data.chat_id);
-
-            // Connect to ActionCable
-            cableRef.current = createConsumer(cableUrl);
-            subscriptionRef.current = cableRef.current.subscriptions.create(
-                {channel: "ChatChannel", chat_id: data.chat_id},
-                {
-                    received: (msg) => {
-                        if (msg.content) {
-                            setMessages((prev) => [...prev, msg]);
-                        }
-                    }
-                }
-            );
-        }
-
         initChat();
     }, []);
+
+    useEffect(() => {
+        if (!chatId) return;
+
+        cableRef.current = createConsumer(cableUrl);
+        subscriptionRef.current = cableRef.current.subscriptions.create(
+            { channel: "ChatChannel", chat_id: chatId },
+            { received(msg) { setMessages((prev) => [...prev, msg]); } }
+        );
+
+        return () => subscriptionRef.current?.unsubscribe();
+    }, [chatId]);
 
     const sendMessage = async (e) => {
         e.preventDefault();

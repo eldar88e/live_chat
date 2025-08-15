@@ -6,4 +6,5 @@ namespace :admin do
   resources :users
   resources :errors
   resources :chat_widgets
+  resources :chats, only: :destroy
 end
