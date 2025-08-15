@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "dev": "yarn vite dev",
-    "build": "yarn vite build && yarn vite build --config vite.widget.config.js"
+    "build": "yarn vite build"
   },
   "devDependencies": {
     "vite": "^7.1.2"
