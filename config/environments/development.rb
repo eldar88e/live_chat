@@ -1,6 +1,17 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  config.after_initialize do
+    Bullet.enable = true             # Включаем Bullet
+    Bullet.alert = true              # Показывать alert в браузере
+    Bullet.bullet_logger = true      # Логировать в bullet.log
+    Bullet.console = true            # Логировать в консоль браузера (dev tools)
+    Bullet.rails_logger = true       # Логировать в Rails log
+    Bullet.add_footer = true         # Добавлять уведомления в футер страницы
+    # Дополнительно:
+    # Bullet.skip_html_injection = false
+    # Bullet.stacktrace_includes = [ 'your_app', 'another_path' ]
+  end
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Make code changes take effect immediately without server restart.
