@@ -18,7 +18,7 @@
     <div id="live-chat-container"
          data-api-url="<%= Rails.env.production? ? "https://#{ENV.fetch('HOST', nil)}" : 'http://localhost:3000' %>"
          data-token="<%= params[:token] %>"
-         data-domain="<%= ENV.fetch('HOST', 'localhost:3000') %>"
+         data-domain="<%= @web_widget.domain || 'localhost:3000' %>"
          data-cable-url="<%= Rails.env.production? ? "wss://#{ENV.fetch('HOST', nil)}/cable" : 'ws://localhost:3000/cable' %>"
          style="height: 100%;"
     ></div>
