@@ -1,17 +1,14 @@
 module Admin
   class MessagesController < BaseController
     before_action :authorize_message, only: :destroy
+    before_action :set_chats, only: :index
 
     def index
-      @chats = Chat.joins(:messages)
-                   .select('chats.*, MAX(messages.created_at)')
-                   .group('chats.id')
-                   .order('MAX(messages.created_at) DESC').includes(:chat_widget)
-      @pages, @chats = pagy(@chats, limit: 10, page_param: :chats_page)
-      @current_chat = Chat.find_by(id: params[:chat_id]) || @chats.first
-      messages = @current_chat&.messages&.order(created_at: :desc) || Message.none
+      @pages, @chats   = pagy(@chats, limit: 10, page_param: :chats_page)
+      @current_chat    = Chat.find_by(id: params[:chat_id]) || @chats.first
+      messages         = @current_chat&.messages&.order(created_at: :desc) || Message.none
       @pagy, @messages = pagy(messages, limit: 50)
-      @messages = @messages.reverse
+      @messages        = @messages.reverse
     end
 
     def create
@@ -32,6 +29,14 @@ module Admin
     end
 
     private
+
+    def set_chats
+      @chats = Chat.joins(:messages)
+                   .select('chats.*, MAX(messages.created_at)')
+                   .group('chats.id')
+                   .order('MAX(messages.created_at) DESC')
+                   .includes(:chat_widget)
+    end
 
     def authorize_message
       authorize [:admin, Message]

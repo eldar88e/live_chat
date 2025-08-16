@@ -14,7 +14,8 @@
         .flex-1.overflow-y-auto
           - @chats.each do |chat|
             - background = chat.id == @current_chat.id ? 'bg-gray-100 dark:bg-gray-700' : ''
-            = link_to admin_messages_path(chat_id: chat.id), class: "block px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition #{background}" do
+            = link_to admin_messages_path(chat_id: chat.id), data: { turbo_prefetch: false },
+                    class: "block px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition #{background}" do
               .flex.items-center.gap-2.justify-between
                 div
                   .text-base.font-medium.text-gray-900.dark:text-white = chat.chat_widget.name
