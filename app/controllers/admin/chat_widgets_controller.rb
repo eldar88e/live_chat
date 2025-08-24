@@ -32,7 +32,10 @@ module Admin
       token = @chat_widget.rotate_token!
       if token
         # redirect_to admin_chat_widgets_path, notice: t('.create')
-        show_token(token)
+        render turbo_stream: [
+          success_notice('Виджет был успешно создан.'),
+          turbo_stream.append(:chat_widgets, partial: '/admin/chat_widgets/chat_widget', locals: { chat_widget: @chat_widget }),
+        ] + show_token(token)
       else
         error_notice(@chat_widget.errors.to_a)
       end
@@ -41,7 +44,7 @@ module Admin
     def update
       if params[:token].present?
         token = @chat_widget.rotate_token!
-        return show_token(token)
+        return render turbo_stream: show_token(token)
       end
 
       if @chat_widget.update(chat_widget_params)
@@ -59,9 +62,12 @@ module Admin
     private
 
     def show_token(token)
-      render turbo_stream: [
+      [
         turbo_stream.update(:modal_title, 'Токен'),
-        turbo_stream.update(:modal_body, html: "Токен: #{token}")
+        turbo_stream.update(
+          :modal_body,
+          html: "<div class='text-gray-900 dark:text-white'>Токен: #{token}</div>".html_safe
+        )
       ]
     end
 

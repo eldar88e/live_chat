@@ -6,7 +6,7 @@
   = link_to 'Создать', new_admin_chat_widget_path, class: 'btn',
                 data: { controller: 'modal-btn', action: 'click->modal-btn#open', turbo_prefetch: false }
 
-#chat_widgets class="pt-6"
+.pt-6
   div class="relative overflow-x-auto shadow-md sm:rounded-lg"
     table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
       thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
@@ -22,4 +22,4 @@
           th scope="col" class="px-6 py-3" Настройки
           th scope="col" class="px-6 py-3" Дата создания
           th scope="col" class="px-6 py-3" Действия
-      tbody = render @chat_widgets
+      tbody#chat_widgets = render @chat_widgets
