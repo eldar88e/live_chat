@@ -34,7 +34,9 @@ module Admin
         # redirect_to admin_chat_widgets_path, notice: t('.create')
         render turbo_stream: [
           success_notice('Виджет был успешно создан.'),
-          turbo_stream.append(:chat_widgets, partial: '/admin/chat_widgets/chat_widget', locals: { chat_widget: @chat_widget }),
+          turbo_stream.append(
+            :chat_widgets, partial: '/admin/chat_widgets/chat_widget', locals: { chat_widget: @chat_widget }
+          )
         ] + show_token(token)
       else
         error_notice(@chat_widget.errors.to_a)
