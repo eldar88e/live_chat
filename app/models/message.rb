@@ -6,7 +6,7 @@ class Message < ApplicationRecord
   validates :content, presence: true, length: { maximum: 1000 },
                       format: {
                         without: /\A\s*\z/,
-                        message: I18n.t('errors.messages.blank_or_spaces')
+                        message: I18n.t('activerecord.errors.models.messages.attributes.blank_or_spaces')
                       }
 
   after_create_commit :broadcast_widget_chat, :broadcast_admin_chat, :notify_tg
