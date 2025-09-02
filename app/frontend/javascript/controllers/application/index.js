@@ -1,6 +1,7 @@
 import { application } from "./application";
 
 const controllers = import.meta.glob("./**/*_controller.js", { eager: true });
+
 Object.entries(controllers).forEach(([path, module]) => {
   const controllerName = path
     .replace(/^\.\//, "") // Remove leading ./
@@ -10,6 +11,3 @@ Object.entries(controllers).forEach(([path, module]) => {
 
   application.register(controllerName, module.default);
 });
-
-import NoticesController from "../application/notices_controller";
-application.register("notices", NoticesController);
