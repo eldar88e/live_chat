@@ -36,9 +36,11 @@ module Admin
                    .group('chats.id')
                    .order('MAX(messages.created_at) DESC')
                    .includes(:chat_widget)
+      return if current_user.admin?
+
       @chats = @chats.where(
         chat_widget_id: current_user.owned_chat_widgets.ids + current_user.chat_widgets.ids
-      ) unless current_user.admin?
+      )
     end
 
     def authorize_message
