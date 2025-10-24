@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 ruby "3.4.6"
-gem "rails", "~> 8.0.2"
+gem "rails", "~> 8.1.0"
 
 gem "bootsnap", require: false
 gem "puma", ">= 6.0"
