@@ -1,4 +1,4 @@
-FROM ruby:3.4.4-alpine3.22 AS live_chat
+FROM ruby:3.4.6-alpine3.22 AS live_chat
 
 RUN apk --update add --no-cache \
     build-base \
@@ -23,7 +23,7 @@ WORKDIR /app
 
 COPY Gemfile* ./
 
-RUN gem update --system 3.6.9
+RUN gem update --system 3.7.2
 RUN gem install bundler -v $(tail -n 1 Gemfile.lock)
 RUN bundle check || bundle install --jobs=2 --retry=3
 RUN bundle clean --force
