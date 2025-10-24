@@ -4,7 +4,7 @@ module Admin
     before_action :set_chats, :set_chats_page, only: :index
 
     def index
-      @pages, @chats   = pagy(@chats, limit: 10, page_param: :chats_page)
+      @pages, @chats   = pagy(@chats, limit: 20, page_param: :chats_page)
       @current_chat    = Chat.find_by(id: params[:chat_id]) || @chats.first
       messages         = @current_chat&.messages&.order(created_at: :desc) || Message.none
       @pagy, @messages = pagy(messages, limit: 50)
