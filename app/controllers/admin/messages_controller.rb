@@ -1,7 +1,7 @@
 module Admin
   class MessagesController < BaseController
     before_action :authorize_message, only: :destroy
-    before_action :set_chats, only: :index
+    before_action :set_chats, :set_chats_page, only: :index
 
     def index
       @pages, @chats   = pagy(@chats, limit: 10, page_param: :chats_page)
@@ -45,6 +45,11 @@ module Admin
 
     def authorize_message
       authorize [:admin, Message]
+    end
+
+    def set_chats_page
+      params[:chats_page] ||= session[:chats_page] || 1
+      session[:chats_page] = params[:chats_page]
     end
   end
 end
