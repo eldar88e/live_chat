@@ -33,6 +33,11 @@ class Message < ApplicationRecord
   end
 
   def notify_tg
-    TelegramSenderJob.perform_later(content) if (role == 'client') && Rails.env.production?
+    chat_widget = chat.chat_widget
+    tg_id       = chat_widget.tg_id
+    token       = chat_widget.tg_token
+    return unless (role == 'client') && Rails.env.production?
+
+    TelegramSenderJob.perform_later(msg: content, id: tg_id, token: token)
   end
 end

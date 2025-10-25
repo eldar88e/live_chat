@@ -8,6 +8,12 @@
   .mb-5
     = form.label :settings
     = form.text_field :settings
+  .mb-5
+    = form.label :tg_id
+    = form.number_field :tg_id
+  .mb-5
+    = form.label :tg_token
+    = form.text_field :tg_token
   = form.submit "Сохранить"
 
 - if method == :patch

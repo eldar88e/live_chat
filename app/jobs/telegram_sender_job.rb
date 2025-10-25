@@ -1,7 +1,7 @@
 class TelegramSenderJob < ApplicationJob
   queue_as :default
 
-  def perform(msg)
-    TelegramService.call(msg)
+  def perform(**args)
+    TelegramService.call(**args)
   end
 end

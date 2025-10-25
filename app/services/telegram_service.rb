@@ -3,10 +3,10 @@ require 'telegram/bot'
 class TelegramService
   MESSAGE_LIMIT = 4_090
 
-  def initialize(message)
-    @bot_token = settings[:tg_token]
-    @chat_ids  = settings[:chat_ids]
-    @message   = message
+  def initialize(**args)
+    @bot_token = args[:token] || settings[:tg_token]
+    @chat_ids  = args[:id] || settings[:chat_ids]
+    @message   = args[:msg]
   end
 
   def self.call(msg)

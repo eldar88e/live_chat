@@ -18,4 +18,10 @@ ru:
         variable: "Переменная"
         value: "Значение"
         description: "Описание"
+      chat_widget:
+        name: "Название"
+        domain: "Домен"
+        settings: "Настройки"
+        tg_id: "ID чата в Телеграме"
+        tg_token: "Токен бота в Телеграме"
 
