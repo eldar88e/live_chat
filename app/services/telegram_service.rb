@@ -9,8 +9,8 @@ class TelegramService
     @message   = args[:msg]
   end
 
-  def self.call(msg)
-    new(msg).report
+  def self.call(**args)
+    new(**args).report
   end
 
   def report
