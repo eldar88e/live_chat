@@ -7,6 +7,7 @@ class TelegramService
     @bot_token = args[:token] || settings[:tg_token]
     @chat_ids  = args[:id] || settings[:chat_ids]
     @message   = args[:msg]
+    @markups   = args[:markups]
   end
 
   def self.call(**args)
@@ -39,18 +40,19 @@ class TelegramService
 
   def tg_send
     message_count = (@message.size / MESSAGE_LIMIT) + 1
+    markup        = build_markup
     message_count.times do
       text_part = next_text_part
-      send_telegram_message(text_part)
+      send_telegram_message(text_part, markup)
     end
     @message_id
   end
 
-  def send_telegram_message(text_part)
+  def send_telegram_message(text_part, markup)
     [@chat_ids.to_s.split(',')].flatten.each do |chat_id|
       Telegram::Bot::Client.run(@bot_token) do |bot|
         @message_id = bot.api.send_message(
-          chat_id: chat_id, text: escape(text_part), parse_mode: 'MarkdownV2'
+          chat_id: chat_id, text: escape(text_part), parse_mode: 'MarkdownV2', reply_markup: markup
         ).message_id
       end
     rescue StandardError => e
@@ -63,5 +65,9 @@ class TelegramService
     part     = @message[0...MESSAGE_LIMIT]
     @message = @message[MESSAGE_LIMIT..] || ''
     part
+  end
+
+  def build_markup
+    Tg::MarkupService.call(@markups)
   end
 end
