@@ -43,7 +43,6 @@ class TelegramService
       text_part = next_text_part
       send_telegram_message(text_part)
     end
-    # TODO: Если нужно зафиксировать все msg_id нужно их поместить в array
     @message_id
   end
 
@@ -55,7 +54,7 @@ class TelegramService
         ).message_id
       end
     rescue StandardError => e
-      Rails.logger.error "Failed to send message to bot: #{e.message} | #{@message} | #{chat_ids}"
+      Rails.logger.error "Failed to send message to bot: #{e.message}"
       @message_id = e
     end
   end
