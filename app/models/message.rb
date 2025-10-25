@@ -38,7 +38,8 @@ class Message < ApplicationRecord
     chat_widget = chat.chat_widget
     tg_id       = chat_widget.tg_id
     token       = chat_widget.tg_token
-    markups     = { markup_ext_url: "https://#{HOST}/admin/messages?chat_id=#{chat_id}", markup_ext_text: 'Ответить' }
+    domain      = chat_widget.domain
+    markups     = { markup_ext_url: "https://#{domain}/admin/messages?chat_id=#{chat_id}", markup_ext_text: 'Ответить' }
     TelegramSenderJob.perform_later(msg: content, id: tg_id, token: token, markups: markups)
   end
 end
