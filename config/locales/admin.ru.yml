@@ -13,6 +13,7 @@ ru:
   activerecord:
     models:
       setting: "Настройка"
+      chat_widget: "Виджет"
     attributes:
       setting:
         variable: "Переменная"

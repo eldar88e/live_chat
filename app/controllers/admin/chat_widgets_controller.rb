@@ -85,7 +85,7 @@ module Admin
     end
 
     def chat_widget_params
-      params.expect(chat_widget: %i[name domain settings])
+      params.expect(chat_widget: %i[name domain settings tg_id tg_token])
     end
   end
 end

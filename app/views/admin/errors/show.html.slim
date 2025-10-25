@@ -1,5 +1,7 @@
+- content_for :title, "##{@item['counter']} #{@item['title']}"
+
 .pt-6.px-4
-  h1.text-xl.leading-8.font-semibold.text-gray-900.dark:text-white.mb-4 = "##{@item['counter']} #{@item['title']}"
+  h1.text-xl.leading-8.font-semibold.text-gray-900.dark:text-white.mb-4 = yield(:title)
 
 .pt-6.px-4.text-gray-900.dark:text-white
   .mb-3.flex.gap-5.mb-5

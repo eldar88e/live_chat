@@ -1,5 +1,7 @@
+- content_for :title, Exceptions
+
 .pt-6.px-4
-  h1.text-xl.leading-8.font-semibold.text-gray-900.dark:text-white.mb-4 Exceptions
+  h1.text-xl.leading-8.font-semibold.text-gray-900.dark:text-white.mb-4 = yield(:title)
 
 .pt-6
   .relative.overflow-x-auto.shadow-md.sm:rounded-lg
