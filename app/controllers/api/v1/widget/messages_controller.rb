@@ -14,7 +14,7 @@ module Api
           message = chat.messages.build(role: :client, content: params[:content])
           return if message.save
 
-          render json: { errors: message.errors.full_messages }, status: :unprocessable_entity
+          render json: { errors: message.errors.full_messages }, status: :unprocessable_content
         end
       end
     end

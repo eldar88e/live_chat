@@ -7,7 +7,7 @@ module MainConcerns
 
   private
 
-  def error_notice(msg, status = :unprocessable_entity)
+  def error_notice(msg, status = :unprocessable_content)
     render turbo_stream: send_notice(msg, 'danger'), status:
   end
 
