@@ -36,7 +36,7 @@ services:
     restart: unless-stopped
 
   pg:
-    image: postgres:16.1
+    image: postgres:16.11
     container_name: live_chat_pg
     hostname: live_chat_pg
     environment:
