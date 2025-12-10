@@ -16,7 +16,7 @@ services:
     networks:
       net:
       proxy-net:
-        ipv4_address: 172.29.0.5
+        ipv4_address: 172.29.0.4
     restart: always
 
   solid_queue:
