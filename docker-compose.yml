@@ -36,7 +36,7 @@ services:
     restart: unless-stopped
 
   pg:
-    image: postgres:16.1-alpine3.19
+    image: postgres:16.1
     container_name: live_chat_pg
     hostname: live_chat_pg
     environment:
