@@ -32,7 +32,7 @@ RUN yarn install --frozen-lockfile \
 COPY . .
 
 # ---- Assets + bootsnap ----
-RUN SECRET_KEY_BASE=dummy \
+RUN SECRET_KEY_BASE=dummy DB_USER=dummy DB_PASSWORD=dummy \
     bundle exec rails assets:precompile \
  && bundle exec bootsnap precompile --gemfile app/ lib/ config/ \
  && rm -rf node_modules
