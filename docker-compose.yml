@@ -8,15 +8,11 @@ services:
     depends_on:
       - pg
     command: ['bundle', 'exec', 'rails', 's', '-p', '3000', '-b', '0.0.0.0']
-    volumes:
-      - gems:/usr/local/bundle
-      - .:/app
-    # ports:
-      # - "3000:3000"
+    ports:
+      - "127.0.0.1:3003:3000"
+      - "172.17.0.1:3003:3000"
     networks:
       net:
-      proxy-net:
-        ipv4_address: 172.29.0.4
     restart: always
 
   solid_queue:
@@ -28,15 +24,12 @@ services:
     depends_on:
       - pg
     command: ['bundle', 'exec', 'rails', 'solid_queue:start']
-    volumes:
-      - gems:/usr/local/bundle
-      - .:/app
     networks:
       - net
     restart: unless-stopped
 
   pg:
-    image: postgres:16.11
+    image: postgres:17.7
     container_name: live_chat_pg
     hostname: live_chat_pg
     environment:
@@ -46,16 +39,12 @@ services:
       TZ: Europe/Moscow
     volumes:
       - db_data:/var/lib/postgresql/data
-      # - ./postgresql.conf:/var/lib/postgresql/data/postgresql.conf
     networks:
       - net
     restart: unless-stopped
 
 volumes:
   db_data:
-  gems:
 
 networks:
   net:
-  proxy-net:
-    external: true

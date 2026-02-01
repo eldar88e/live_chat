@@ -1,34 +1,65 @@
-FROM ruby:3.4.6-alpine3.22 AS live_chat
+# =========================
+# Builder
+# =========================
+FROM ruby:3.4.8-alpine3.23 AS builder
 
-RUN apk --update add --no-cache \
+RUN apk add --no-cache \
     build-base \
+    postgresql-dev \
+    vips-dev \
     yaml-dev \
     tzdata \
-    yarn \
-    libc6-compat \
-    postgresql-dev \
-    postgresql-client \
-    curl \
-    libffi-dev \
-    ruby-dev \
-    vips \
-    vips-dev \
-    && rm -rf /var/cache/apk/*
+    yarn
 
-ENV BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
+ENV RAILS_ENV=production \
+    NODE_ENV=production \
+    BUNDLE_DEPLOYMENT=1 \
+    BUNDLE_PATH=/usr/local/bundle \
     BUNDLE_WITHOUT="development test"
 
 WORKDIR /app
 
-COPY Gemfile* ./
-
-RUN gem update --system 3.7.2
-RUN gem install bundler -v $(tail -n 1 Gemfile.lock)
-RUN bundle check || bundle install --jobs=2 --retry=3
-RUN bundle clean --force
+COPY Gemfile Gemfile.lock ./
+RUN gem install bundler -v "$(tail -n 1 Gemfile.lock)" \
+ && bundle install --jobs=4 --retry=3 \
+ && bundle clean --force \
+ && rm -rf /usr/local/bundle/cache
 
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile \
+ && rm -rf node_modules/.cache
+
+COPY . .
+
+# ---- Assets + bootsnap ----
+RUN SECRET_KEY_BASE=dummy \
+    bundle exec rails assets:precompile \
+ && bundle exec bootsnap precompile --gemfile app/ lib/ config/ \
+ && rm -rf node_modules
+
+# =========================
+# Runtime
+# =========================
+FROM ruby:3.4.8-alpine3.23 AS runtime
+
+RUN apk add --no-cache \
+    tzdata \
+    libpq \
+    yaml \
+    vips
+
+ENV RAILS_ENV=production \
+    BUNDLE_DEPLOYMENT=1 \
+    BUNDLE_PATH=/usr/local/bundle \
+    BUNDLE_WITHOUT="development test"
+
+WORKDIR /app
+
+RUN addgroup -g 1000 deploy && adduser -u 1000 -G deploy -D -s /bin/sh deploy
+
+COPY --from=builder --chown=deploy:deploy /usr/local/bundle /usr/local/bundle
+COPY --from=builder --chown=deploy:deploy /app /app
+
+USER deploy:deploy
 
 EXPOSE 3000
