@@ -61,7 +61,7 @@ module Admin
         turbo_stream.update(:modal_title, 'Токен'),
         turbo_stream.update(
           :modal_body,
-          html: tag.div("Токен: #{token}", class: 'text-gray-900 dark:text-white')
+          html: "<div class='text-gray-900 dark:text-white'>Токен: #{token}</div>"
         )
       ]
     end
