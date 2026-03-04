@@ -8,6 +8,8 @@ services:
     depends_on:
       - pg
     command: ['bundle', 'exec', 'rails', 's', '-p', '3000', '-b', '0.0.0.0']
+    environment:
+      SOLID_QUEUE_IN_PUMA: true
     ports:
       - "127.0.0.1:3004:3000"
       - "172.17.0.1:3004:3000"
@@ -15,18 +17,18 @@ services:
       net:
     restart: always
 
-  solid_queue:
-    image: live_chat
-    build: .
-    env_file: ./.env
-    container_name: live_chat_solid_queue
-    hostname: live_chat_solid_queue
-    depends_on:
-      - pg
-    command: ['bundle', 'exec', 'rails', 'solid_queue:start']
-    networks:
-      - net
-    restart: unless-stopped
+#  solid_queue:
+#    image: live_chat
+#    build: .
+#    env_file: ./.env
+#    container_name: live_chat_solid_queue
+#    hostname: live_chat_solid_queue
+#    depends_on:
+#      - pg
+#    command: ['bundle', 'exec', 'rails', 'solid_queue:start']
+#    networks:
+#      - net
+#    restart: unless-stopped
 
   pg:
     image: postgres:16.11

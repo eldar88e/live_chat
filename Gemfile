@@ -1,10 +1,10 @@
 source "https://rubygems.org"
 
 ruby "3.4.8"
-gem "rails", "~> 8.0.2"
+gem "rails", "~> 8.1.2"
 
 gem "bootsnap", require: false
-gem "puma", ">= 6.0"
+gem "puma", "~> 7.1"
 gem "turbo-rails"
 gem "stimulus-rails"
 gem 'sprockets-rails'
@@ -13,7 +13,6 @@ gem "tzinfo-data", platforms: %i[windows jruby]
 
 gem "devise"
 gem "pg", "~> 1.6"
-# gem 'redis', '~> 5.4'
 
 gem 'active_link_to'
 gem "bcrypt"
@@ -35,7 +34,6 @@ gem 'solid_cache'
 gem 'solid_cable'
 
 group :development, :test do
-  gem "pry"
   gem "brakeman", require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
