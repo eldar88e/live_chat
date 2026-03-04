@@ -40,7 +40,8 @@ services:
       POSTGRES_DB: ${DB_NAME}
       TZ: Europe/Moscow
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql
+#      - db_data:/var/lib/postgresql/data # for older versions psql than 18
     networks:
       - net
     restart: unless-stopped
