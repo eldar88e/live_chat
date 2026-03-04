@@ -25,6 +25,7 @@ gem 'ransack'
 gem 'vite_rails'
 gem 'dotenv'
 gem 'i18n'
+gem 'rollbar'
 gem 'rack-cors'
 gem 'telegram-bot-ruby', require: false
 
