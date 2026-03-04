@@ -57,11 +57,12 @@ module Admin
     private
 
     def show_token(token)
+      h = ActionController::Base.helpers
       [
         turbo_stream.update(:modal_title, 'Токен'),
         turbo_stream.update(
           :modal_body,
-          html: "<div class='text-gray-900 dark:text-white'>Токен: #{token}</div>".html_safe
+          html: h.content_tag(:div, "Токен: #{token}", class: 'text-gray-900 dark:text-white')
         )
       ]
     end
