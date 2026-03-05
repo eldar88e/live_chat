@@ -18,13 +18,13 @@ class ChatWidget < ApplicationRecord
     raw
   end
 
-  def valid_token?(raw)
-    return false if raw.blank? || token_digest.blank?
-
-    BCrypt::Password.new(token_digest).is_password?(raw)
-  rescue BCrypt::Errors::InvalidHash
-    false
-  end
+  # def valid_token?(raw)
+  #   return false if raw.blank? || token_digest.blank?
+  #
+  #   BCrypt::Password.new(token_digest).is_password?(raw)
+  # rescue BCrypt::Errors::InvalidHash
+  #   false
+  # end
 
   def self.find_with_token(raw)
     hash = Digest::SHA256.hexdigest(raw)

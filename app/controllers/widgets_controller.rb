@@ -7,7 +7,6 @@ class WidgetsController < ApplicationController
 
   def set_web_widget
     @web_widget = ChatWidget.find_with_token(params[:token])
-    raise ActiveRecord::RecordNotFound if @web_widget.blank?
   rescue ActiveRecord::RecordNotFound
     Rails.logger.error('web widget does not exist')
     render json: { error: 'web widget does not exist' }, status: :not_found
