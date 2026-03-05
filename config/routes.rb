@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'pages#home'
 
-  devise_for :users
+  devise_for :users, skip: [:registrations]
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   authenticate :user, ->(user) { user.root? } do
