@@ -31,12 +31,18 @@ module Admin
     end
 
     def authorized_chats
-      return Chat.all if current_user.root?
-
-      Chat.joins(:chat_widget)
-          .left_joins(chat_widget: :memberships)
-          .where('chat_widgets.owner_id = :uid OR memberships.user_id = :uid', uid: current_user.id)
-          .distinct
+      # rubocop:disable Layout/IndentationWidth
+      # rubocop:disable Layout/ElseAlignment
+      @authorized_chats ||= if current_user.root?
+        Chat.all
+      else
+        Chat.joins(:chat_widget)
+            .left_joins(chat_widget: :memberships)
+            .where('chat_widgets.owner_id = :uid OR memberships.user_id = :uid', uid: current_user.id)
+            .distinct
+      end
+      # rubocop:enable Layout/ElseAlignment
+      # rubocop:enable Layout/IndentationWidth
     end
 
     def set_chats_page
