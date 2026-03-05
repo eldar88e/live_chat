@@ -7,7 +7,7 @@ tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-
   td.px-6.py-4 = chat_widget.id
   th scope="row" class="px-6 py-4" = chat_widget.name
   td.px-6.py-4 = chat_widget.domain
-  td.px-6.py-4 = chat_widget.users.pluck(:email).join(', ')
+  td.px-6.py-4 = chat_widget.users.pluck(:email).join(",\n")
   td.px-6.py-4
     - if chat_widget.settings.present?
       = chat_widget.settings
