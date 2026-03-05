@@ -1,9 +1,11 @@
 module Admin
   module ResourceConcerns
     extend ActiveSupport::Concern
+    include Pundit::Authorization
 
     included do
       before_action :set_resource, if: :resource_action?
+      before_action :authorize_user!
     end
 
     def new
@@ -90,6 +92,10 @@ module Admin
       return "Добавить #{resource_name_accusative}" if action_name == 'new'
 
       "Редактировать #{resource_name_accusative} ID: #{@resource.id}"
+    end
+
+    def authorize_user!
+      authorize [:admin, @resource || resource_class]
     end
   end
 end
