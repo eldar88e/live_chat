@@ -1,5 +1,6 @@
 module Admin
   class MessagesController < BaseController
+    skip_before_action :set_resource
     before_action :authorize_message, only: :destroy
     before_action :set_chats, :set_chats_page, only: :index
 

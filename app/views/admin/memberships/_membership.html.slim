@@ -1,0 +1,4 @@
+div id="#{dom_id membership}" class="flex items-center justify-between py-2 px-3 bg-gray-50 dark:bg-gray-700 rounded mb-2"
+  span.text-gray-900.dark:text-white = membership.user.email
+  = button_to admin_chat_widget_membership_path(membership.chat_widget, membership), method: :delete, data: { confirm: 'Удалить участника?', controller: 'confirm', action: 'click->confirm#call' }, class: 'btn btn-danger btn-sm' do
+    | Удалить

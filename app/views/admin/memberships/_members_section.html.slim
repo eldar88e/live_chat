@@ -1,0 +1,12 @@
+div class="mt-6 border-t border-gray-200 dark:border-gray-600 pt-4"
+  h3.text-lg.font-semibold.text-gray-900.dark:text-white.mb-3 Участники
+
+  = form_with url: admin_chat_widget_memberships_path(chat_widget), method: :post, class: 'flex gap-2 mb-4' do |f|
+    = f.text_field :email, placeholder: 'Email пользователя', class: 'flex-1', name: 'email'
+    = f.submit 'Добавить', class: 'btn'
+
+  div id="members_list"
+    - if chat_widget.memberships.any?
+      = render partial: 'admin/memberships/membership', collection: chat_widget.memberships.includes(:user), as: :membership
+    - else
+      p.text-gray-500.dark:text-gray-400 Участников пока нет
