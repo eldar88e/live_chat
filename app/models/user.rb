@@ -11,22 +11,6 @@ class User < ApplicationRecord
 
   enum :role, { user: 0, manager: 1, moderator: 2, admin: 3, root: 4 }
 
-  def root?
-    role == 'root'
-  end
-
-  def admin?
-    role == 'admin'
-  end
-
-  def moderator?
-    role == 'moderator'
-  end
-
-  def manager?
-    role == 'manager'
-  end
-
   def self.ransackable_attributes(_auth_object = nil)
     %w[id created_at role email]
   end
