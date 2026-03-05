@@ -1,7 +1,7 @@
 module Admin
   class MessagePolicy < Admin::BasePolicy
     def index?
-      user.root? || chat_widget_owner? || chat_widget_member?
+      true
     end
 
     def create?
