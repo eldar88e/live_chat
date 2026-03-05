@@ -3,6 +3,8 @@ module Admin
     extend ActiveSupport::Concern
     include Pundit::Authorization
 
+    rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
     included do
       before_action :set_resource, if: :resource_action?
       before_action :authorize_user!
@@ -96,6 +98,10 @@ module Admin
 
     def authorize_user!
       authorize [:admin, @resource || resource_class]
+    end
+
+    def user_not_authorized
+      error_notice t('pundit.not_authorized')
     end
   end
 end
