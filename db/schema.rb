@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_05_033324) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_05_070222) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -36,6 +36,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_05_033324) do
     t.string "external_id", null: false
     t.boolean "online", default: false, null: false
     t.datetime "updated_at", null: false
+    t.index ["chat_widget_id", "external_id"], name: "index_chats_on_chat_widget_id_and_external_id", unique: true
     t.index ["chat_widget_id"], name: "index_chats_on_chat_widget_id"
   end
 
@@ -56,6 +57,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_05_033324) do
     t.datetime "created_at", null: false
     t.integer "role", default: 0, null: false
     t.datetime "updated_at", null: false
+    t.index ["chat_id", "created_at"], name: "index_messages_on_chat_id_and_created_at"
     t.index ["chat_id"], name: "index_messages_on_chat_id"
   end
 

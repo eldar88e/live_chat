@@ -31,7 +31,10 @@ module Admin
         if user.root?
           scope.all
         else
-          scope.where(id: user.owned_chat_widgets.ids + user.chat_widgets.ids)
+          # scope.where(id: user.owned_chat_widgets.ids + user.chat_widgets.ids)
+          scope.left_joins(:memberships)
+               .where('chat_widgets.owner_id = :uid OR memberships.user_id = :uid', uid: user.id)
+               .distinct
         end
       end
     end

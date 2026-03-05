@@ -6,6 +6,8 @@ module Admin
     def initialize(token = DEFAULT_TOKEN)
       @token = token
       @conn  = Faraday.new(url: API_ENDPOINT) do |f|
+        f.options.timeout = 10
+        f.options.open_timeout = 5
         f.response :json, content_type: /\bjson$/
         f.adapter Faraday.default_adapter
       end

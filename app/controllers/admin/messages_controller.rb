@@ -33,8 +33,10 @@ module Admin
     def authorized_chats
       return Chat.all if current_user.root?
 
-      chat_widget_ids = current_user.owned_chat_widgets.ids + current_user.chat_widgets.ids
-      Chat.joins(:chat_widget).where(chat_widgets: { id: chat_widget_ids })
+      Chat.joins(:chat_widget)
+          .left_joins(chat_widget: :memberships)
+          .where('chat_widgets.owner_id = :uid OR memberships.user_id = :uid', uid: current_user.id)
+          .distinct
     end
 
     def set_chats_page

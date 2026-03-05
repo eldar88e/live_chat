@@ -13,7 +13,7 @@ module Admin
     end
 
     def destroy?
-      user.root? || user.admin? || user.moderator?
+      user.root?
     end
   end
 end

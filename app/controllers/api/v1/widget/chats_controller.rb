@@ -3,8 +3,8 @@ module Api
     module Widget
       class ChatsController < BaseController
         def show
-          chat = current_chat_widget.chats.find(params[:id])
-          render json: chat.messages.order(:created_at)
+          pagy, messages = pagy(chat.messages.order(created_at: :desc).select(:content, :role, :created_at), limit: 50)
+          render json: { messages: messages.reverse, meta: { total_pages: pagy.pages } }
         end
 
         def create

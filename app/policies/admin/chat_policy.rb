@@ -27,7 +27,7 @@ module Admin
     end
 
     def chat_widget_member?
-      record.chat_widget.users.include?(user)
+      record.chat_widget.users.exists?(user.id)
     end
   end
 end
