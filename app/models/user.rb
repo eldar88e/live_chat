@@ -9,7 +9,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  enum :role, { user: 0, manager: 1, moderator: 2, admin: 3 }
+  enum :role, { user: 0, manager: 1, moderator: 2, admin: 3, root: 4 }
+
+  def root?
+    role == 'root'
+  end
 
   def admin?
     role == 'admin'
