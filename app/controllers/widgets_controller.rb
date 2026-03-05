@@ -3,6 +3,8 @@ class WidgetsController < ApplicationController
   after_action :allow_iframe_requests
   layout false
 
+  def show; end
+
   private
 
   def set_web_widget

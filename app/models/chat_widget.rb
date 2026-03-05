@@ -14,7 +14,6 @@ class ChatWidget < ApplicationRecord
     raw               = SecureRandom.urlsafe_base64(48)
     self.token_hash   = Digest::SHA256.hexdigest(raw)
     self.token_digest = BCrypt::Password.create(raw, cost: 12)
-    save!
     raw
   end
 

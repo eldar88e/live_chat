@@ -36,10 +36,15 @@ module Admin
       @authorized_chats ||= if current_user.root?
         Chat.all
       else
-        Chat.joins(:chat_widget)
-            .left_joins(chat_widget: :memberships)
-            .where('chat_widgets.owner_id = :uid OR memberships.user_id = :uid', uid: current_user.id)
-            .distinct
+        # Chat.joins(:chat_widget)
+        #     .left_joins(chat_widget: :memberships)
+        #     .where('chat_widgets.owner_id = :uid OR memberships.user_id = :uid', uid: current_user.id)
+        #     .distinct
+        Chat.where(
+          chat_widget_id: ChatWidget.where(owner_id: current_user.id).or(
+            ChatWidget.where(id: current_user.memberships.select(:chat_widget_id))
+          )
+        )
       end
       # rubocop:enable Layout/ElseAlignment
       # rubocop:enable Layout/IndentationWidth
