@@ -37,7 +37,7 @@ Rollbar.configure do |config|
   # is not installed)
   config.use_async = true
   # Supply your own async handler:
-  config.async_handler = proc { |payload| Rollbar.perform_later(payload) }
+  config.async_handler = proc { |payload| RollbarJob.perform_later(payload) }
 
   # Enable asynchronous reporting (using sucker_punch)
   # config.use_sucker_punch
