@@ -29,7 +29,7 @@ module Admin
                                .select('chats.*, MAX(messages.created_at)')
                                .group('chats.id')
                                .order('MAX(messages.created_at) DESC')
-                               .includes(:chat_widget)
+                               .preload(:chat_widget)
     end
 
     def authorized_chats
