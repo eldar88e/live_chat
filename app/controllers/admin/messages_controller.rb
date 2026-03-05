@@ -1,7 +1,7 @@
 module Admin
   class MessagesController < BaseController
-    skip_before_action :set_resource
     before_action :set_chats, :set_chats_page, only: :index
+    before_action :set_resource, only: :create
 
     def index
       @pages, @chats   = pagy(@chats, limit: 20, page_key: :chats_page)
@@ -12,13 +12,10 @@ module Admin
     end
 
     def create
-      chat    = Chat.find(params[:chat_id])
-      message = chat.messages.build(role: :manager, content: params[:content])
-
-      if message.save
+      if @resource.save
         render turbo_stream: success_notice('Сообщение отправлено.')
       else
-        error_notice(message.errors.to_a)
+        error_notice(@resource.errors.to_a)
       end
     end
 
@@ -42,6 +39,11 @@ module Admin
     def set_chats_page
       params[:chats_page] ||= session[:chats_page] || 1
       session[:chats_page] = params[:chats_page]
+    end
+
+    def set_resource
+      chat      = Chat.find(params[:chat_id])
+      @resource = chat.messages.build(role: :manager, content: params[:content])
     end
   end
 end
