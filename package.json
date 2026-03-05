@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "yarn vite dev",
     "build": "yarn vite build",
-    "lint": "eslint app/frontend --ext .js,.ts,.jsx,.tsx"
+    "lint": "eslint app/frontend --ext .js,.ts,.jsx,.tsx",
+    "lint:fix": "eslint app/frontend --ext .js,.ts,.jsx,.tsx --fix"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

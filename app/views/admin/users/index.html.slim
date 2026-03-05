@@ -2,6 +2,8 @@
 
 .pt-6.px-4
   h1 class="text-xl leading-8 font-semibold text-gray-900 dark:text-white mb-4" = yield(:title)
+  = link_to 'Создать', new_admin_user_path, class: 'btn',
+                data: { controller: 'modal-btn', action: 'click->modal-btn#open', turbo_prefetch: false }
 
   = search_form_for @q_users, url: admin_users_path, method: :get, class: "max-w-md mx-auto" do |f|
     .relative
@@ -29,6 +31,7 @@
             = sort_link(@q_users, :role, 'Роль', data: { turbo_prefetch: false })
           th scope="col" class="px-6 py-3" Действия
 
-      tbody = render @users
+      tbody id="resources"
+        = render partial: '/admin/users/user', collection: @resources, as: :resource
 
   = render partial: '/layouts/partials/admin/pagy'

@@ -22,16 +22,12 @@ export default defineConfig({
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
     },
     css: {
-        preprocessorOptions: {
-            scss: {
-                api: 'modern-compiler',
-            },
-        },
         postcss: {
             plugins: [autoprefixer()],
         },
     },
     build: {
+        assetsInlineLimit: 1500,
         chunkSizeWarningLimit: 800,
         sourcemap: false,
     },

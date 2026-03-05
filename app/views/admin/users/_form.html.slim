@@ -1,0 +1,12 @@
+= form_with model: [:admin, @resource], class: 'admin-form', data: { action: 'submit->modal#close' } do |form|
+  .mb-5
+    = form.label :email
+    = form.text_field :email
+  .mb-5
+    = form.label :password
+    = form.password_field :password
+  .mb-5
+    = form.label :role
+    = form.select :role, User.roles.keys.map { |k| [t("roles.#{k}"), k] }
+  .mb-5
+  = form.submit @resource.new_record? ? 'Создать' : 'Сохранить', class: 'btn'
