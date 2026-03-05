@@ -1,4 +1,4 @@
-- incoming   = %w[bot manager].include?(message.role)
+- incoming   = message.role == 'client'
 - align_cls  = incoming ? "justify-start" : "justify-end"
 - bubble_cls = incoming ? "rounded-r-xl rounded-bl-xl" : "rounded-l-xl rounded-br-xl"
 - time_align = incoming ? "text-left" : "text-right"
