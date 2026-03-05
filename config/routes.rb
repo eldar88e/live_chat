@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for :users
   get 'up' => 'rails/health#show', as: :rails_health_check
 
-  authenticate :user, ->(user) { user.admin? } do
+  authenticate :user, ->(user) { user.root? } do
     mount SolidQueueDashboard::Engine, at: "/admin/solid-queue"
     # mount PgHero::Engine, at: '/admin/pghero'
   end
