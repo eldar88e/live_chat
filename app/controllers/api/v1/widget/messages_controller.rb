@@ -12,9 +12,11 @@ module Api
         def create
           chat = current_chat_widget.chats.find(params[:chat_id])
           message = chat.messages.build(role: :client, content: params[:content])
-          return if message.save
-
-          render json: { errors: message.errors.full_messages }, status: :unprocessable_content
+          if message.save
+            head :ok
+          else
+            render json: { errors: message.errors.full_messages }, status: :unprocessable_content
+          end
         end
       end
     end
