@@ -31,16 +31,12 @@ module Admin
     private
 
     def set_chats
-      @chats = Chat.joins(:messages)
-                   .select('chats.*, MAX(messages.created_at)')
-                   .group('chats.id')
-                   .order('MAX(messages.created_at) DESC')
-                   .includes(:chat_widget)
-      return if current_user.admin?
-
-      @chats = @chats.where(
-        chat_widget_id: current_user.owned_chat_widgets.ids + current_user.chat_widgets.ids
-      )
+      @chats = policy_scope([:admin, resource_class])
+               .joins(:messages)
+               .select('chats.*, MAX(messages.created_at)')
+               .group('chats.id')
+               .order('MAX(messages.created_at) DESC')
+               .includes(:chat_widget)
     end
 
     def authorize_message

@@ -1,7 +1,7 @@
 module Admin
   class ChatWidgetPolicy < Admin::BasePolicy
     def index?
-      user.root? || chat_widget_owner? || chat_widget_member?
+      true
     end
 
     def create?
@@ -24,6 +24,16 @@ module Admin
 
     def chat_widget_member?
       record.users.include?(user)
+    end
+
+    class Scope < ApplicationPolicy::Scope
+      def resolve
+        if user.root?
+          scope.all
+        else
+          scope.where(id: user.owned_chat_widgets.ids + user.chat_widgets.ids)
+        end
+      end
     end
   end
 end
