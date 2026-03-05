@@ -1,6 +1,6 @@
 module Admin
   class MembershipsController < BaseController
-    skip_before_action :set_resource, only: :create
+    skip_before_action :authorize_user!, :set_resource, only: :create
 
     def create
       user = User.find_by(email: params[:email]&.strip&.downcase)
