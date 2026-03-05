@@ -3,7 +3,7 @@ module Admin
     before_action :set_chat_widget, only: %i[edit update destroy]
 
     def index
-      if current_user.admin?
+      if current_user.root?
         @chat_widgets = ChatWidget.all
       else
         @chat_widgets = current_user.owned_chat_widgets
@@ -78,7 +78,7 @@ module Admin
 
     def set_chat_widget
       @chat_widget =
-        if current_user.admin?
+        if current_user.root?
           ChatWidget.find(params[:id])
         else
           current_user.owned_chat_widgets.find(params[:id])
