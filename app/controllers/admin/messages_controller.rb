@@ -1,7 +1,6 @@
 module Admin
   class MessagesController < BaseController
     skip_before_action :set_resource
-    before_action :authorize_message, only: :destroy
     before_action :set_chats, :set_chats_page, only: :index
 
     def index
@@ -23,25 +22,21 @@ module Admin
       end
     end
 
-    def destroy
-      @message = Message.find(params[:id])
-      @message.destroy!
-      render turbo_stream: [turbo_stream.remove(@message), success_notice('Сообщение было успешно удалено.')]
-    end
-
     private
 
     def set_chats
-      @chats = policy_scope([:admin, resource_class])
-               .joins(:messages)
-               .select('chats.*, MAX(messages.created_at)')
-               .group('chats.id')
-               .order('MAX(messages.created_at) DESC')
-               .includes(:chat_widget)
+      @chats = authorized_chats.joins(:messages)
+                               .select('chats.*, MAX(messages.created_at)')
+                               .group('chats.id')
+                               .order('MAX(messages.created_at) DESC')
+                               .includes(:chat_widget)
     end
 
-    def authorize_message
-      authorize [:admin, Message]
+    def authorized_chats
+      return Chat.all if current_user.root?
+
+      chat_widget_ids = current_user.owned_chat_widgets.ids + current_user.chat_widgets.ids
+      Chat.joins(:chat_widget).where(chat_widgets: { id: chat_widget_ids })
     end
 
     def set_chats_page

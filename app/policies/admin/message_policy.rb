@@ -25,16 +25,5 @@ module Admin
     def chat_widget_member?
       chat_widget.users.exists?(user.id)
     end
-
-    class Scope < ApplicationPolicy::Scope
-      def resolve
-        if user.root?
-          scope.all
-        else
-          chat_widget_ids = user.owned_chat_widgets.ids + user.chat_widgets.ids
-          scope.joins(:chat_widget).where(chat_widgets: { id: chat_widget_ids })
-        end
-      end
-    end
   end
 end
