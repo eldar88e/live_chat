@@ -1,7 +1,5 @@
 module Admin
   class UsersController < BaseController
-    include ResourceConcerns
-
     def index
       @q_users          = User.order(created_at: :desc).ransack(params[:q])
       @pagy, @resources = pagy(@q_users.result)

@@ -2,15 +2,16 @@ module Admin
   class BaseController < ApplicationController
     include Pundit::Authorization
     include Pagy::Method
+    include ResourceConcerns
 
-    before_action :authenticate_user!, :authorize_admin_access!
+    before_action :authenticate_user!, :authorize_user!
 
     layout 'admin'
 
     private
 
-    def authorize_admin_access!
-      authorize %i[admin base], :admin_access?
+    def authorize_user!
+      authorize [:admin, @resource || resource_class]
     end
   end
 end

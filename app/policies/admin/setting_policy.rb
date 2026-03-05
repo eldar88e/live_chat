@@ -1,6 +1,14 @@
 module Admin
-  class MessagePolicy < Admin::BasePolicy
+  class SettingPolicy < Admin::BasePolicy
     def index?
+      user.root?
+    end
+
+    def create?
+      user.root?
+    end
+
+    def update?
       user.root?
     end
 
