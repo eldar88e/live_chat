@@ -32,7 +32,7 @@ module Admin
           scope.all
         else
           chat_widget_ids = user.owned_chat_widgets.ids + user.chat_widgets.ids
-          scope.joins(chat: :chat_widget).where(chat_widgets: { id: chat_widget_ids })
+          scope.joins(:chat_widget).where(chat_widgets: { id: chat_widget_ids })
         end
       end
     end
