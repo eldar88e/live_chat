@@ -11,6 +11,7 @@ export default function LiveChat({
   cableUrl: cableUrl,
 }) {
   const [chatId, setChatId] = useState(null);
+  const [externalId, setExternalId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const messagesEndRef = useRef(null);
@@ -25,15 +26,16 @@ export default function LiveChat({
   };
 
   const initChat = async () => {
-    let externalId =
-      localStorage.getItem("rails_chat_ext_id") ||
+    let extId =
+      localStorage.getItem("chat_ext_id") ||
       Math.random().toString(36).substr(2, 10);
-    localStorage.setItem("rails_chat_ext_id", externalId);
+    localStorage.setItem("chat_ext_id", extId);
+    setExternalId(extId);
 
     const res = await fetch(`${apiUrl}/api/v1/widget/chats`, {
       method: "POST",
       headers: AUTH_HEADERS,
-      body: JSON.stringify({ external_id: externalId }),
+      body: JSON.stringify({ external_id: extId }),
     });
     const data = await res.json();
     setChatId(data.chat_id);
@@ -82,7 +84,7 @@ export default function LiveChat({
 
     cableRef.current = createConsumer(cableUrl);
     subscriptionRef.current = cableRef.current.subscriptions.create(
-      { channel: "ChatChannel", chat_id: chatId },
+      { channel: "ChatChannel", token: token, external_id: externalId },
       {
         received(msg) {
           setMessages((prev) => [...prev, msg]);
