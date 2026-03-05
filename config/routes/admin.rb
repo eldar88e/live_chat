@@ -3,7 +3,7 @@ namespace :admin do
 
   resources :errors
 
-  resources :messages, except: :show
+  resources :messages, except: %i[show destroy]
   resources :settings, except: :show
   resources :users
   resources :chat_widgets
