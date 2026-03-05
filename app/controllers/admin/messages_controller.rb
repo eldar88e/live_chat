@@ -1,7 +1,8 @@
 module Admin
   class MessagesController < BaseController
+    skip_before_action :authorize_user!, only: :index
     before_action :set_chats, :set_chats_page, only: :index
-    before_action :set_resource, only: :create
+    before_action :set_resource, :authorize_user!, only: :create
 
     def index
       @pages, @chats   = pagy(@chats, limit: 20, page_key: :chats_page)
