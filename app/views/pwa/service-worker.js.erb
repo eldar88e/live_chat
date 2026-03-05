@@ -1,0 +1,62 @@
+const CACHE_NAME = "<%= Setting.fetch_value(:app_name).to_s.parameterize(separator: '_').presence || 'bot' %>";
+const OFFLINE_URLS = [
+  "/manifest.json",
+  "<%= vite_asset_path 'application.css' %>",
+  "<%= vite_asset_path 'application.js' %>",
+  "<%= vite_asset_path 'images/icons.svg' %>",
+  "<%= vite_asset_path 'admin.css' %>",
+  "<%= vite_asset_path 'admin.js' %>",
+  "/android-chrome-192x192.png",
+  "/android-chrome-512x512.png",
+  "/icon.png",
+  "/icon.svg",
+  "/favicon.ico",
+  "/offline.html"
+];
+
+self.addEventListener("install", event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(OFFLINE_URLS))
+  );
+  self.skipWaiting();
+});
+
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+    )
+  );
+  self.clients.claim();
+});
+
+self.addEventListener("fetch", event => {
+  if (event.request.method !== "GET") return;
+
+  event.respondWith(
+    caches.match(event.request).then(response =>
+      response ||
+      fetch(event.request).catch(() => {
+        if (event.request.destination === "document") {
+          return caches.match("/offline.html");
+        }
+      })
+    )
+  );
+});
+
+self.addEventListener("push", event => {
+  const data = event.data ? event.data.json() : {};
+  event.waitUntil(
+    self.registration.showNotification(data.title || "Bot", {
+      body: data.body || "",
+      icon: "/android-chrome-192x192.png",
+      badge: "/android-chrome-192x192.png",
+    })
+  );
+});
+
+self.addEventListener("notificationclick", event => {
+  event.notification.close();
+  event.waitUntil(clients.openWindow("/admin/messages"));
+});
