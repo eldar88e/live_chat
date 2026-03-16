@@ -22,8 +22,8 @@
         <th scope="col" class="px-6 py-3">Действия</th>
       </tr>
       </thead>
-      <tbody>
-        <%= render @settings %>
+      <tbody id="resources">
+        <%= render partial: '/admin/settings/setting', collection: @settings, as: :resource %>
       </tbody>
     </table>
   </div>

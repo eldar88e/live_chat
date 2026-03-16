@@ -14,14 +14,14 @@ module Admin
       @resource = resource_class.new
       render turbo_stream: [
         turbo_stream.update(:modal_title, action_title),
-        turbo_stream.update(:modal_body, partial: form_partial, locals: { method: :post })
+        turbo_stream.update(:modal_body, partial: form_partial)
       ]
     end
 
     def edit
       render turbo_stream: [
         turbo_stream.update(:modal_title, action_title),
-        turbo_stream.update(:modal_body, partial: form_partial, locals: { method: :patch })
+        turbo_stream.update(:modal_body, partial: form_partial)
       ]
     end
 
