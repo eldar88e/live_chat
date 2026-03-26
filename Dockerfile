@@ -1,7 +1,7 @@
 # =========================
 # Builder
 # =========================
-FROM ruby:3.4.8-alpine3.23 AS builder
+FROM ruby:3.4.9-alpine3.23 AS builder
 
 RUN apk add --no-cache \
     build-base \
@@ -40,7 +40,7 @@ RUN SECRET_KEY_BASE=dummy DB_USER=dummy DB_PASSWORD=dummy \
 # =========================
 # Runtime
 # =========================
-FROM ruby:3.4.8-alpine3.23 AS runtime
+FROM ruby:3.4.9-alpine3.23 AS runtime
 
 RUN apk add --no-cache \
     tzdata \
