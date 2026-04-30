@@ -1,5 +1,6 @@
 module Admin
   class ErrorsController < BaseController
+    skip_before_action :set_resource, only: :show
     before_action :set_service, :set_items
 
     def index; end

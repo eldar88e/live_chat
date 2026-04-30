@@ -4,7 +4,7 @@ module Admin
     include Pundit::Authorization
 
     included do
-      before_action :set_resource, if: :resource_action?
+      before_action :set_resource, if: :resource_action?, only: %i[edit update destroy]
       before_action :authorize_user!
 
       rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
