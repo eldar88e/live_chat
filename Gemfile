@@ -45,7 +45,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'bullet'
-  gem 'letter_opener'
+  # gem 'letter_opener'
   # gem 'solargraph'
   # gem 'sshkit'
   gem 'web-console'
