@@ -5,7 +5,7 @@ module Admin
     before_action :set_resource, :authorize_user!, only: :create
 
     def index
-      @chats_page, @chats = pagy(@chats, limit: 30, page_key: :chats_page)
+      @chats_page, @chats = pagy(@chats, limit: 30, page_key: 'chats_page')
       @current_chat       = authorized_chats.find_by(id: params[:chat_id]) || @chats.first
       messages            = @current_chat&.messages&.order(created_at: :desc) || Message.none
       @pagy, @messages    = pagy(messages, limit: 50)
