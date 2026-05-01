@@ -13,6 +13,10 @@ module Admin
 
     private
 
+    def authorize_user!
+      authorize %i[admin error], :"#{action_name}?"
+    end
+
     def set_service
       @service = Admin::RollbarService.new
     end
