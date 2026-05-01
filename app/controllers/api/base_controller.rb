@@ -16,7 +16,7 @@ module Api
     def authenticate_chat_widget!
       token  = request.authorization&.sub(/^Bearer\s+/, '')
       domain = params[:domain] || request.headers['X-Widget-Domain']
-      return head :unauthorized if token.blank? || domain.blank?
+      return head :unauthorized if token_domain_blank?(token, domain)
 
       # @current_chat_widget = ChatWidget.find_by(domain: normalize_domain(domain))
       # head :unauthorized unless @current_chat_widget&.valid_token?(token)
@@ -24,6 +24,10 @@ module Api
       head :unauthorized unless @current_chat_widget&.domain == normalize_domain(domain)
     rescue ActiveRecord::RecordNotFound
       head :unauthorized
+    end
+
+    def token_domain_blank?(token, domain)
+      token.blank? || domain.blank?
     end
 
     def normalize_domain(value)

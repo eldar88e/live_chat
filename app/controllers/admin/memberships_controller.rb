@@ -11,17 +11,21 @@ module Admin
       authorize [:admin, membership]
 
       if membership.save
-        render turbo_stream: turbo_stream.append(
-          :members_list,
-          partial: 'admin/memberships/membership',
-          locals: { membership: membership }
-        )
+        render_membership(membership)
       else
         error_notice(membership.errors.full_messages)
       end
     end
 
     private
+
+    def render_membership(membership)
+      render turbo_stream: turbo_stream.append(
+        :members_list,
+        partial: 'admin/memberships/membership',
+        locals: { membership: membership }
+      )
+    end
 
     def set_chat_widget
       @chat_widget = ChatWidget.find(params[:chat_widget_id])

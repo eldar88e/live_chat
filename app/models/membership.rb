@@ -4,7 +4,7 @@ class Membership < ApplicationRecord
 
   enum :role, { read: 0, write: 1 }
 
-  validates :user_id, uniqueness: { scope: :chat_widget_id, message: 'уже является участником' }
+  validates :user_id, uniqueness: { scope: :chat_widget_id }
   validate :user_is_not_owner
 
   private

@@ -31,6 +31,12 @@ ru:
         settings: "Настройки"
         tg_id: "ID чата в Телеграме"
         tg_token: "Токен бота в Телеграме"
+    errors:
+      models:
+        membership:
+          attributes:
+            user_id:
+              taken: "уже является участником"
   pundit:
     not_authorized: "У вас нет разрешения на это действие."
 
