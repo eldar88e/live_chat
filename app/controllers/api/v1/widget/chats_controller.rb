@@ -16,14 +16,6 @@ module Api
             chat.messages.create!(role: :bot, content: reply_content)
           end
 
-          Rails.logger.info(
-            'NEW CHAT DEBUG: ' \
-            "id=#{chat.id}, " \
-            "lead_id_method=#{chat.respond_to?(:lead_id)}, " \
-            "has_attribute=#{chat.has_attribute?(:lead_id)}, " \
-            "attributes=#{chat.attributes.keys.inspect}"
-          )
-
           render json: chat_metadata(chat)
         end
 
