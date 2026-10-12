@@ -3,14 +3,14 @@ module Api
     module Widget
       class MessagesController < BaseController
         def index
-          chat = current_chat_widget.chats.find(params[:chat_id])
+          chat = current_chat_widget.chats.find(params.expect(:chat_id))
           pagy, messages = pagy(chat.messages.order(created_at: :desc).select(:content, :role, :created_at), limit: 50)
 
           render json: { messages: messages.reverse, meta: { total_pages: pagy.pages } }
         end
 
         def create
-          chat = current_chat_widget.chats.find(params[:chat_id])
+          chat = current_chat_widget.chats.find(params.expect(:chat_id))
           message = chat.messages.build(role: :client, content: params[:content])
           if message.save
             head :ok

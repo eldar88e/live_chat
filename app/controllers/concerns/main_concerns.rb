@@ -19,9 +19,8 @@ module MainConcerns
     turbo_stream.append(:notices, partial: '/layouts/partials/notices/notice', locals: { notices: msg, key: })
   end
 
-  # rubocop:disable Naming/MemoizedInstanceVariableName
+  # rubocop:disable-next Naming/MemoizedInstanceVariableName
   def settings
     @settings_ ||= Setting.all_cached
   end
-  # rubocop:enable Naming/MemoizedInstanceVariableName
 end

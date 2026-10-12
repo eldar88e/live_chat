@@ -56,7 +56,7 @@ module Admin
     private
 
     def set_resource
-      @resource = resource_class.find(params[:id])
+      @resource = resource_class.find(params.expect(:id))
     end
 
     def resource_class

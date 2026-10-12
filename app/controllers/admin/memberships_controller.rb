@@ -28,7 +28,7 @@ module Admin
     end
 
     def set_chat_widget
-      @chat_widget = ChatWidget.find(params[:chat_widget_id])
+      @chat_widget = ChatWidget.find(params.expect(:chat_widget_id))
     end
   end
 end

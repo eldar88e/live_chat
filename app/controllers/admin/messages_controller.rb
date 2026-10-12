@@ -48,7 +48,7 @@ module Admin
     end
 
     def set_resource
-      chat      = Chat.find(params[:chat_id])
+      chat      = Chat.find(params.expect(:chat_id))
       @resource = chat.messages.build(role: :manager, content: params[:content])
     end
   end

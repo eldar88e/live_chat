@@ -7,15 +7,13 @@ class ChatChannel < ApplicationCable::Channel
     return reject unless @chat
 
     stream_from "chat_#{@chat.id}"
-    # rubocop:disable Rails/SkipsModelValidations
+    # rubocop:disable-next Rails/SkipsModelValidations
     @chat.update_column(:online, true)
-    # rubocop:enable Rails/SkipsModelValidations
   end
 
   def unsubscribed
-    # rubocop:disable Rails/SkipsModelValidations
+    # rubocop:disable-next Rails/SkipsModelValidations
     @chat&.update_column(:online, false)
-    # rubocop:enable Rails/SkipsModelValidations
   end
 
   private
