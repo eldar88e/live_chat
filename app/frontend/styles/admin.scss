@@ -238,19 +238,28 @@ body {
   }
 }
 
-body.aside-hide {
-
-  .close {
-    display: block;
-    @media (min-width: 1024px) {
+body {
+  .nav-wrapper {
+    .close {
       display: none;
     }
   }
+}
 
-  .burger {
-    display: none;
-    @media (min-width: 1024px) {
+body.aside-hide {
+  .nav-wrapper {
+    .close {
       display: block;
+      @media (min-width: 1024px) {
+        display: none;
+      }
+    }
+
+    .burger {
+      display: none;
+      @media (min-width: 1024px) {
+        display: block;
+      }
     }
   }
 
