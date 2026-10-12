@@ -4,7 +4,7 @@ namespace :admin do
   resources :errors
 
   resources :messages, except: %i[show destroy]
-  resources :leads, only: :index
+  resources :leads, only: %i[index destroy]
   resources :settings, except: :show
   resources :users
   resources :chat_widgets do
