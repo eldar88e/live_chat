@@ -35,8 +35,8 @@ COPY . .
 RUN SECRET_KEY_BASE=dummy DB_USER=dummy DB_PASSWORD=dummy \
     VITE_RUBY_SKIP_ASSETS_PRECOMPILE_INSTALL=true \
     bundle exec rails assets:precompile \
+    && rm -rf node_modules
 # && bundle exec bootsnap precompile --gemfile app/ lib/ config/ \
- && rm -rf node_modules
 
 # =========================
 # Runtime
