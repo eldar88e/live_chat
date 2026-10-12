@@ -32,6 +32,7 @@ export default [
               CustomEvent: "readonly",
               setTimeout: "readonly",
               setInterval: "readonly",
+              crypto: "readonly",
               clearTimeout: "readonly",
               clearInterval: "readonly",
               HTMLInputElement: "readonly",
