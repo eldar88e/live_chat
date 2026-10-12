@@ -4,6 +4,7 @@ class ChatWidget < ApplicationRecord
   has_many :users, through: :memberships
 
   has_many :chats, dependent: :destroy
+  has_many :leads, dependent: :destroy
   # has_many :visitors,      dependent: :destroy
 
   before_validation :normalize_domain

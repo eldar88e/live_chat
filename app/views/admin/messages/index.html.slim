@@ -41,6 +41,13 @@
             .flex.justify-between.items-center.flex-1
               div
                 .text-base.font-medium = "Чат №#{@current_chat.id}"
+                - if (lead = @current_chat.lead)
+                  .text-sm
+                    span = "#{lead.name} · "
+                    - if lead.phone.present?
+                      = link_to lead.phone, "tel:+#{lead.phone}"
+                    - if lead.email.present?
+                      .text-sm = mail_to lead.email
                 - if @current_chat.online?
                   .text-emerald-600.flex.items-center.gap-1.text-xs
                     .w-3.h-3.rounded-full.bg-emerald-600

@@ -16,10 +16,19 @@ module Api
             chat.messages.create!(role: :bot, content: reply_content)
           end
 
-          render json: { chat_id: chat.id }
+          render json: chat_metadata(chat)
         end
 
         private
+
+        def chat_metadata(chat)
+          {
+            chat_id: chat.id,
+            contact_token: chat.signed_id(purpose: :contacts, expires_in: 24.hours),
+            contacts_saved: chat.lead_id.present?,
+            has_client_messages: chat.messages.client.exists?
+          }
+        end
 
         def create_new_chat_widget
           utm = params.permit(utm: %i[utm_source utm_medium utm_campaign utm_term utm_content])[:utm] || {}

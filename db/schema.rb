@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_12_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_12_020000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -37,8 +37,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_12_000000) do
     t.bigint "chat_widget_id", null: false
     t.boolean "online", default: false, null: false
     t.jsonb "utm", default: {}, null: false
+    t.bigint "lead_id"
     t.index ["chat_widget_id", "external_id"], name: "index_chats_on_chat_widget_id_and_external_id", unique: true
     t.index ["chat_widget_id"], name: "index_chats_on_chat_widget_id"
+    t.index ["lead_id"], name: "index_chats_on_lead_id"
+  end
+
+  create_table "leads", force: :cascade do |t|
+    t.bigint "chat_widget_id", null: false
+    t.string "name", null: false
+    t.string "phone"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_widget_id", "email"], name: "index_leads_on_chat_widget_id_and_email", unique: true
+    t.index ["chat_widget_id", "phone"], name: "index_leads_on_chat_widget_id_and_phone", unique: true
+    t.index ["chat_widget_id"], name: "index_leads_on_chat_widget_id"
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -86,6 +100,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_12_000000) do
 
   add_foreign_key "chat_widgets", "users", column: "owner_id"
   add_foreign_key "chats", "chat_widgets"
+  add_foreign_key "chats", "leads"
+  add_foreign_key "leads", "chat_widgets"
   add_foreign_key "memberships", "chat_widgets"
   add_foreign_key "memberships", "users"
   add_foreign_key "messages", "chats"
