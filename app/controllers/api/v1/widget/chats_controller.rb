@@ -11,7 +11,10 @@ module Api
           chat = current_chat_widget.chats.find_by(external_id: params[:external_id])
 
           if chat.blank?
-            chat = current_chat_widget.chats.create!(external_id: params[:external_id])
+            utm = params.permit(
+              utm: %i[utm_source utm_medium utm_campaign utm_term utm_content]
+            )[:utm] || {}
+            chat = current_chat_widget.chats.create!(external_id: params[:external_id], utm: utm)
             reply_content = BotResponder.first_reply
             chat.messages.create!(role: :bot, content: reply_content)
           end

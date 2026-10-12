@@ -100,10 +100,25 @@
     </script>
     <div class="widget-holder">
       <iframe
-        src="<%= Rails.env.production? ? "https://#{ENV.fetch('HOST', nil)}" : 'http://localhost:3000' %>/widget?token=<%= settings[:self_chat_token] %>"
+        id="chat-widget"
+        data-src="<%= Rails.env.production? ? "https://#{ENV.fetch('HOST', nil)}" : 'http://localhost:3000' %>/widget?token=<%= settings[:self_chat_token] %>"
         style="height: 100% !important; width: 100% !important;"
       ></iframe>
     </div>
+    <script>
+      (() => {
+        const iframe = document.getElementById('chat-widget');
+        const widgetUrl = new URL(iframe.dataset.src, window.location.href);
+        const pageParams = new URLSearchParams(window.location.search);
+
+        for (const key of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content']) {
+          const value = pageParams.get(key);
+          if (value) widgetUrl.searchParams.set(key, value);
+        }
+
+        iframe.src = widgetUrl.toString();
+      })();
+    </script>
     <div style="position: fixed; bottom: 20px; right: 20px;">
       <button
         title="Открыть чат"

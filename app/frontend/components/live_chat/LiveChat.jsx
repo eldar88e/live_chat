@@ -32,10 +32,23 @@ export default function LiveChat({
     localStorage.setItem("chat_ext_id", extId);
     setExternalId(extId);
 
+    const params = new URLSearchParams(window.location.search);
+    const utm = {};
+    for (const key of [
+      "utm_source",
+      "utm_medium",
+      "utm_campaign",
+      "utm_term",
+      "utm_content",
+    ]) {
+      const value = params.get(key);
+      if (value) utm[key] = value;
+    }
+
     const res = await fetch(`${apiUrl}/api/v1/widget/chats`, {
       method: "POST",
       headers: AUTH_HEADERS,
-      body: JSON.stringify({ external_id: extId }),
+      body: JSON.stringify({ external_id: extId, utm }),
     });
     const data = await res.json();
     setChatId(data.chat_id);
