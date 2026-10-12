@@ -27,6 +27,7 @@
             tr
               - %w[name phone email chats created_at].each do |column|
                 th scope="col" class="px-6 py-3" = t(".#{column}")
+              th scope="col" class="px-6 py-3" Действия
           tbody
             - leads.each do |lead|
               tr id=dom_id(lead) class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
@@ -47,4 +48,8 @@
                   - lead.chats.sort_by(&:id).each do |chat|
                     = link_to t('.chat', id: chat.id), admin_messages_path(chat_id: chat.id), class: 'block text-blue-600 hover:underline', data: { turbo_prefetch: false }
                 td.px-6.py-4 = format_date(lead.created_at)
+
+                td.px-6.py-4
+                  = button_to admin_lead_path(leads), method: :delete, data: { confirm: 'Вы уверены, что хотите удалить данный контакт?', controller: 'confirm', action: 'click->confirm#call' }, class: 'btn btn-danger' do
+                    = render Admin::IconComponent.new name: :trash
   = render partial: '/layouts/partials/admin/pagy'
