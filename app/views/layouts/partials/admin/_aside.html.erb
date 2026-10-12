@@ -12,6 +12,15 @@
       </li>
 
       <li>
+        <%= active_link_to admin_leads_path, data: { turbo_prefetch: false } do %>
+          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m18 0v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75M13 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/>
+          </svg>
+          <span class="ml-3"><%= t('admin.leads.index.title') %></span>
+        <% end %>
+      </li>
+
+      <li>
         <%= active_link_to admin_chat_widgets_path, active: :exclusive, data: { turbo_prefetch: false } do %>
           <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>

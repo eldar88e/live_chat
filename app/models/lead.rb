@@ -2,6 +2,9 @@ class Lead < ApplicationRecord
   belongs_to :chat_widget
   has_many :chats, dependent: :nullify
 
+  scope :for_widget, ->(id) { where(chat_widget_id: id) if id.present? }
+  scope :for_chat, ->(id) { where(id: Chat.where(id: id).select(:lead_id)) if id.present? }
+
   before_validation :normalize_contacts
 
   validates :name, presence: true, length: { maximum: 100 }

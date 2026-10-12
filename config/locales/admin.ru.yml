@@ -1,5 +1,22 @@
 ru:
   admin:
+    leads:
+      index:
+        title: "Контакты"
+        widget: "Чат-виджет"
+        all_widgets: "Все чат-виджеты"
+        chat_id: "Номер диалога"
+        filter: "Показать"
+        reset: "Сбросить"
+        empty: "Контакты не найдены."
+        name: "Имя"
+        phone: "Телефон"
+        email: "Email"
+        chats: "Диалоги"
+        created_at: "Дата создания"
+        chat: "Чат №%{id}"
+        not_provided: "—"
+        no_chats: "Нет связанных диалогов"
     settings:
       create: "Настройка была успешно создана."
       update: "Настройка была успешно обновлена."

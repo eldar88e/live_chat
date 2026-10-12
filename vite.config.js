@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import ViteRails from "vite-plugin-rails";
 import tailwindcss from "@tailwindcss/vite";
-import autoprefixer from "autoprefixer";
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
@@ -20,11 +19,6 @@ export default defineConfig({
     resolve: {
         alias: { '@': '/app/frontend' },
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
-    },
-    css: {
-        postcss: {
-            plugins: [autoprefixer()],
-        },
     },
     build: {
         assetsInlineLimit: 1500,

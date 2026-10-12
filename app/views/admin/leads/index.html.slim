@@ -1,0 +1,50 @@
+- content_for :title, t('.title')
+
+.pt-6.px-4
+  h1 class="text-xl leading-8 font-semibold text-gray-900 dark:text-white mb-4" = yield(:title)
+
+  = form_with url: admin_leads_path, method: :get, class: 'flex flex-wrap items-end gap-4' do |f|
+    div
+      = f.label :chat_widget_id, t('.widget'), class: 'block mb-2 text-sm'
+      = f.select :chat_widget_id, options_from_collection_for_select(@chat_widgets, :id, :name, params[:chat_widget_id]), { include_blank: t('.all_widgets') }, class: 'rounded border p-2 dark:bg-gray-800'
+    div
+      = f.label :chat_id, t('.chat_id'), class: 'block mb-2 text-sm'
+      = f.number_field :chat_id, value: params[:chat_id], min: 1, step: 1, class: 'rounded border p-2 dark:bg-gray-800'
+    = f.submit t('.filter'), class: 'btn'
+    = link_to t('.reset'), admin_leads_path, class: 'btn', data: { turbo_prefetch: false }
+
+.pt-6.px-4
+  - if @leads.empty?
+    p class="py-6 text-gray-500 dark:text-gray-400" = t('.empty')
+  - @leads.group_by(&:chat_widget).each do |widget, leads|
+    section.mb-6
+      h2 class="mb-3 text-lg font-semibold text-gray-900 dark:text-white"
+        = widget.name
+        span class="ml-2 text-sm font-normal text-gray-500" = widget.domain
+      div class="relative overflow-x-auto shadow-md sm:rounded-lg"
+        table class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+          thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+            tr
+              - %w[name phone email chats created_at].each do |column|
+                th scope="col" class="px-6 py-3" = t(".#{column}")
+          tbody
+            - leads.each do |lead|
+              tr id=dom_id(lead) class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white" = lead.name
+                td.px-6.py-4
+                  - if lead.phone.present?
+                    = link_to lead.phone, "tel:+#{lead.phone}", class: 'text-blue-600 hover:underline'
+                  - else
+                    = t('.not_provided')
+                td.px-6.py-4
+                  - if lead.email.present?
+                    = mail_to lead.email, lead.email, class: 'text-blue-600 hover:underline'
+                  - else
+                    = t('.not_provided')
+                td.px-6.py-4
+                  - if lead.chats.empty?
+                    = t('.no_chats')
+                  - lead.chats.sort_by(&:id).each do |chat|
+                    = link_to t('.chat', id: chat.id), admin_messages_path(chat_id: chat.id), class: 'block text-blue-600 hover:underline', data: { turbo_prefetch: false }
+                td.px-6.py-4 = format_date(lead.created_at)
+  = render partial: '/layouts/partials/admin/pagy'
