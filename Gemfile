@@ -29,6 +29,7 @@ gem 'image_processing'
 gem 'rollbar'
 gem 'rack-cors'
 gem 'telegram-bot-ruby', require: false
+gem 'ruby-vips'
 
 gem 'solid_queue'
 gem "solid_queue_dashboard"
