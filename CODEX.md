@@ -2,7 +2,7 @@
 
 ## Project Context
 
-- Stack: Ruby 3.4.11, Rails 8.1, PostgreSQL, Vite, Stimulus, Turbo, Slim, ViewComponent
+- Stack: Ruby 3.4.13, Rails 8.1, PostgreSQL, Vite, Stimulus, Turbo, Slim, ViewComponent
 - Main language for UI and content: Russian
 - Default locale: `:ru`
 - Timezone: `Europe/Moscow`
